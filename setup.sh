@@ -11,3 +11,5 @@ echo "TMUX key binding is CTRL+z"
 ln -s "$(realpath i3)" ~/.config/i3
 ln -s "$(realpath init.vim)" ~/.config/nvim/init.vim
 ln -s "$(realpath sudoers.lecture)" ~/sudoers.lecture
+
+ln -s "$(realpath fonts)"  ~/.fonts

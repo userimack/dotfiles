@@ -1,5 +1,5 @@
 ## Welcome text
-figlet Mahendra
+#figlet Mahendra
 
 
 # echo "Welcome Mahendra :) Have a Good day"
@@ -263,9 +263,6 @@ source $ZSH/oh-my-zsh.sh
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
 
-export AIRFLOW_HOME=~/airflow
-alias run_airflow='airflow webserver -p 8080'
-
 function sudo(){
     cat ~/sudoers.lecture
     # echo 'Ctrl + c to cancel'
@@ -275,6 +272,8 @@ function sudo(){
 
 alias psql='psql grn_static_master'
 alias update='sudo apt update -y && sudo apt full-upgrade -y'
+alias ipython3='ipython3 --TerminalInteractiveShell.editing_mode=vi'
+alias ipython='ipython --TerminalInteractiveShell.editing_mode=vi'
 
 # Changing Caps_lock key to ESC
 #xmodmap -e "clear lock" #disable caps lock switch
@@ -283,3 +282,8 @@ setxkbmap -layout us -option caps:escape
 
 # change xdg-open to ranger
 # alias xdg-open='ranger'
+
+export ERL_AFLAGS="-kernel shell_history enabled"
+export AIRFLOW_HOME=~/app_airflow
+export AIRFLOW_HOME=/home/mahendra/pyconf/app_airflow
+#alias run_airflow='airflow webserver -p 8080'
