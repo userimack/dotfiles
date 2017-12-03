@@ -95,10 +95,6 @@ qrcode() {
 # zsh options
 #-------------------------------------------------------------
 
-# vim mode
-#bindkey -v
-set -o vi
-
 # syntax highlighting
 source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets pattern)
@@ -132,6 +128,7 @@ zstyle ':completion:*' menu select
 # aliases
 #-------------------------------------------------------------
 alias d='deactivate'
+alias exa="exa -abghl --git"
 alias l='ls -lhtr'
 alias ll='ls -lhSr'  # -l = list , -h = human readable sizes, -S = Sort descending, -r = reverse sorting
 alias server='python -m SimpleHTTPServer'
@@ -142,7 +139,6 @@ alias fm='xdg-open .'
 alias zipping='echo -ne "Compress Method <gz>: $ tar  -cvzf  name_of_the_archive.tar.gz <files>\nExtract_Method <gz>: tar -xzvf archive.tar.gz # -C /home # to Extract in a specific directory\nCompress_Method <bz2>: tar -cjvf name_of_the_archive.tar.bz2 <files>\nExtract_Method <bz2>: tar -xjvf archive.tar.bz2\n"'
 
 alias xc='tee /dev/tty|xclip -selection clipboard'
-set -o vi
 
 
 # Functions duone and dutwo are to get size of each file in the directory#
@@ -170,6 +166,7 @@ source /usr/share/autojump/autojump.sh
 alias vim=nvim
 
 export GOPATH=$HOME/go
+export GOROOT=/usr/local/go
 export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
 
 alias rm="echo Use 'trash', or the full path i.e. '/bin/rm'"
@@ -265,8 +262,6 @@ source $ZSH/oh-my-zsh.sh
 
 function sudo(){
     cat ~/sudoers.lecture
-    # echo 'Ctrl + c to cancel'
-    # read
     /usr/bin/sudo $@
 }
 
@@ -285,5 +280,14 @@ setxkbmap -layout us -option caps:escape
 
 export ERL_AFLAGS="-kernel shell_history enabled"
 export AIRFLOW_HOME=~/app_airflow
-export AIRFLOW_HOME=/home/mahendra/pyconf/app_airflow
 #alias run_airflow='airflow webserver -p 8080'
+
+# vim mode
+#bindkey -v
+set -o vi
+# Binding ctrl+ r for backward search
+bindkey '^R' history-incremental-pattern-search-backward
+
+# spark config
+export SPARK_HOME='/home/mahendra/spark'
+export PATH=$SPARK_HOME/bin:$PATH

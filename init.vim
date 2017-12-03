@@ -1,4 +1,4 @@
-set nocompatible
+set nocompatible:source ~/.vimrc
 
 "-------------- PLUGINS STARTS -----------------
 call plug#begin('~/.vim/plugged')
@@ -64,7 +64,7 @@ call plug#end()
 set lazyredraw
 
 " Configuration for 'majutsushi/tagbar'
-nmap <F8> :TagbarToggle<CR>
+" nmap <F8> :TagbarToggle<CR>
 
 " To format xml documents
 "map @@x !%xmllint --format --recover -^M
@@ -368,7 +368,7 @@ nnoremap <leader>rf gg=G
 
 " indenting keybinds
 nnoremap <Tab> >>_
-nnoremap <S-Tab> <<_
+nnoremad <S-Tab> <<_
 inoremap <S-Tab> <C-D>
 vnoremap <Tab> >gv
 vnoremap <S-Tab> <gv
