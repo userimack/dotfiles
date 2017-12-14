@@ -1,4 +1,8 @@
-set nocompatible:source ~/.vimrc
+if !has("nvim")
+	set nocompatible
+endif
+" set nocompatible
+" source ~/.vimrc
 
 "-------------- PLUGINS STARTS -----------------
 call plug#begin('~/.vim/plugged')
@@ -368,7 +372,7 @@ nnoremap <leader>rf gg=G
 
 " indenting keybinds
 nnoremap <Tab> >>_
-nnoremad <S-Tab> <<_
+nnoremap <S-Tab> <<_
 inoremap <S-Tab> <C-D>
 vnoremap <Tab> >gv
 vnoremap <S-Tab> <gv
