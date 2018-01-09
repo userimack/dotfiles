@@ -152,9 +152,13 @@ export EDITOR="$VISUAL"
 
 source /usr/share/autojump/autojump.sh
 alias vim=nvim
+alias vi=nvim
 
 export GOPATH=$HOME/go
 export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
 
 alias rm="echo Use 'trash', or the full path i.e. '/bin/rm'"
 alias tmux='tmux -u'
+
+# added by Anaconda3 installer
+export PATH="/home/azri/anaconda3/bin:$PATH"

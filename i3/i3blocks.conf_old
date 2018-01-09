@@ -28,57 +28,33 @@ command=/usr/share/i3blocks/$BLOCK_NAME
 separator_block_width=15
 markup=none
 
-# Network interface monitoring
+# Volume indicator
 #
-# If the instance is not specified, use the interface used for default route.
-# The address can be forced to IPv4 or IPv6 with -4 or -6 switches.
-
-[bandwidth]
-instance=wlp1s0
+# The first parameter sets the step (and units to display)
+# The second parameter overrides the mixer selection
+# See the script for details.
+[volume]
+#label=VOL
+label=♪
+instance=Master
+#instance=PCM
 interval=1
-
-[wifi]
-instance=wlp1s0
-interval=10
-separator=false
-
-[iface]
-#instance=wlan0
-color=#00FF00
-interval=10
-separator=true
-
-
-
-# CPU usage
-#
-# The script may be called with -w and -c switches to specify thresholds,
-# see the script for details.
-[cpu_usage]
-# label=CPU
-label=
-interval=10
-min_width=CPU: 100.00%
-separator=false
-
-[load_average]
-command=/home/mahendra/.config/i3/scripts/load_average
-interval=10
-label=
+signal=10
+command=/usr/share/i3blocks/volume 5 pulse
 
 # Memory usage
 #
 # The type defaults to "mem" if the instance is not specified.
 [memory]
-label=M
-separator=false
-interval=5
-
-[memory]
-label=S
-instance=swap
+label=MEM
 separator=false
 interval=30
+
+# [memory]
+# label=SWAP
+# instance=swap
+# separator=false
+# interval=30
 
 # Disk usage
 #
@@ -90,27 +66,44 @@ label=
 #instance=/mnt/data
 interval=30
 
-
-
-# Volume indicator
+# Network interface monitoring
 #
-# The first parameter sets the step (and units to display)
-# The second parameter overrides the mixer selection
-# See the script for details.
-[volume]
-#label=VOL
-label=
-instance=Master
-#instance=PCM
-interval=1
-signal=10
-command=/usr/share/i3blocks/volume 5 pulse
+# If the instance is not specified, use the interface used for default route.
+# The address can be forced to IPv4 or IPv6 with -4 or -6 switches.
+[iface]
+#instance=wlan0
+color=#00FF00
+interval=10
+separator=false
 
+[wifi]
+#instance=wlp3s0
+interval=10
+separator=true
+
+# [bandwidth]
+# #instance=eth0
+# interval=5
+
+# CPU usage
+#
+# The script may be called with -w and -c switches to specify thresholds,
+# see the script for details.
+[cpu_usage]
+label=CPU
+interval=10
+min_width=CPU: 100.00%
+separator=true
+
+[load_average]
+command=/home/mahendra/.config/i3/scripts/load_average
+interval=1
+label=
 # Battery indicator
 #
 # The battery instance defaults to 0.
 [battery]
-label=
+label=BAT
 #label=⚡
 #instance=1
 interval=30

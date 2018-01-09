@@ -17,7 +17,7 @@ Plug 'vim-syntastic/syntastic'
 Plug 'godlygeek/tabular'
 Plug 'tpope/vim-surround'
 Plug 'kien/ctrlp.vim'
-Plug 'vim-scripts/matchit.zip'
+" Plug 'vim-scripts/matchit.zip'
 Plug 'slashmili/alchemist.vim'
 
 Plug 'vim-scripts/dbext.vim'
@@ -41,7 +41,7 @@ Plug 'morhetz/gruvbox'
 "
 Plug 'valloric/youcompleteme'
 Plug 'scrooloose/nerdcommenter'
-Plug 'vim-scripts/TaskList.vim'
+" Plug 'vim-scripts/TaskList.vim'
 
 " status line
 Plug 'vim-airline/vim-airline'
