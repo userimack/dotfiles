@@ -1,5 +1,6 @@
 ## Welcome text
 #figlet Mahendra
+fortune softwareengineering | cowsay -f tux
 
 
 # echo "Welcome Mahendra :) Have a Good day"
@@ -279,7 +280,9 @@ setxkbmap -layout us -option caps:escape
 # change xdg-open to ranger
 # alias xdg-open='ranger'
 
+# to get history in iex console
 export ERL_AFLAGS="-kernel shell_history enabled"
+
 export AIRFLOW_HOME=~/app_airflow
 #alias run_airflow='airflow webserver -p 8080'
 
@@ -292,3 +295,15 @@ bindkey '^R' history-incremental-pattern-search-backward
 # spark config
 export SPARK_HOME='/home/mahendra/spark'
 export PATH=$SPARK_HOME/bin:$PATH
+
+# anaconda3 config
+#export PATH="/home/mahendra/anaconda3/bin:$PATH"
+
+
+# ol is a function which helps in cding into the last used directory
+ol ()
+{
+    latest_dir=$(/bin/ls -tr | tail -1);
+    echo "cding into $latest_dir";
+    cd "$latest_dir"
+}
