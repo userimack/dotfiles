@@ -306,3 +306,29 @@ if [[ -r /usr/local/bin/virtualenvwrapper.sh ]]; then
 else
     echo "WARNING: Can't find virtualenvwrapper.sh"
 fi
+
+# open up ~/.zshrc for editing, if present else ~/.bashrc
+function zz() {
+    if [ -f ${HOME}/.zshrc ]; then
+        vim ${HOME}/.zshrc
+    else
+        vim ${HOME}/.bashrc
+    fi
+}
+
+function VCDOTFILES() {
+    cd ${HOME}/dotfiles_mac/
+    echo "last commit:"
+    git log -1
+
+    echo -e "\n\nCreating a commit of all the dotfiles"
+    if "$(git add -A && git commit -m "Backup Date: $(date)")"; then
+        echo "Yay!! Commit created successfully. Files changed:"
+        git show --stat --oneline HEAD
+    else
+        echo "Opps: No dotfiles changed"
+    fi
+
+
+
+}
