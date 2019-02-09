@@ -66,6 +66,8 @@ plugins=(
   kubectl
   docker
   virtualenvwrapper
+  docker
+  docker-compose
 )
 
 source $ZSH/oh-my-zsh.sh
@@ -160,7 +162,7 @@ alias path='echo -e ${PATH//:/\\n}'
 alias libpath='echo -e ${LD_LIBRARY_PATH//:/\\n}'
 
 # git related aliases
-alias gc='git commit -am'
+# alias gc='git commit -am'
 alias gl='git log --graph --oneline --decorate --all'
 alias gs='git status -sb'
 
@@ -170,6 +172,14 @@ alias weatherforecast='curl -s wttr.in/Hyderabad | head -37 | tail -30'
 qrcode() {
     echo $@ | curl -F-=\<- qrenco.de
 }
+
+alias myip='ipconfig getifaddr en1 || ipconfig getifaddr en0'
+
+alias dif='diff --side-by-side --suppress-common-lines'
+alias named='find . -name'
+alias ql='qlmanage -p 2>/dev/null'
+alias -g b64='| base64'
+alias -g b64d='| base64 -D'
 
 
 #-------------------------------------------------------------
@@ -212,7 +222,7 @@ alias exa="exa -abghl --git"
 alias l='ls -lhtr'
 alias ll='ls -lhSr'  # -l = list , -h = human readable sizes, -S = Sort descending, -r = reverse sorting
 # alias server='echo "Starting server on $(ifconfig | grep "inet\ 192" | cut -d" " -f2):8000"; python2.7 -m SimpleHTTPServer'
-alias server='echo "Starting server on $(ifconfig | grep "inet\ 192" | cut -d" " -f2):8000"; python -m http.server'
+alias server='echo "Starting server on http://$(ipconfig getifaddr en1 || ipconfig getifaddr en0):8000"; python3 -m http.server'
 
 # using xc command whatever you pipe to it, it will print and copy the same to clipboard
 # alias xc='tee /dev/tty|xclip -selection clipboard'
@@ -316,6 +326,17 @@ function zz() {
     fi
 }
 
+# open up ~/.config/nvim/init.vim for editing, or ~/.vimrc
+function vv() {
+    if [ -f ${HOME}/.config/nvim/init.vim ]; then
+        vim ${HOME}/.config/nvim/init.vim
+    else
+        vim ${HOME}/.vimrc
+    fi
+}
+
+
+
 function VCDOTFILES() {
     cd ${HOME}/dotfiles_mac/
     echo "last commit:"
@@ -328,7 +349,19 @@ function VCDOTFILES() {
     else
         echo "Opps: No dotfiles changed"
     fi
-
-
-
 }
+
+function CLEANUP_DOCKER() {
+    docker images | grep "none" | tr -s " " | cut -d " " -f 3 | uniq |  while read -r line; do echo -e "Removing > ${line}"; docker rmi -f ${line}; done
+    echo  -e "-- CLEAN UP OF DOCKER IMAGES IS DONE --\n\n"
+
+    docker images > /tmp/.docker_image_ids
+    # docker container ls -a | tr -s " " | cut -d " " -f2 | while read -r id; do if [ grep ${id} /tmp/.docker_image_ids ];  echo "> ${id}"; done
+    # docker container ls -a | tr -s " " | tail +2  | cut -d " " -f2 | while read -r id; do; if [ $(grep -c "${id}" /tmp/.docker_image_ids) -eq 0 ]; then echo "> Removing container - ${id}"; docker container rm "${id}"; fi; done
+}
+
+# uncomment to setup minikube - docker env
+# eval $(minikube docker-env)
+
+
+alias pmr='python manage.py runserver'
