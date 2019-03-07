@@ -62,12 +62,15 @@ ZSH_THEME="robbyrussell"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
+  z
   git
   kubectl
   docker
   virtualenvwrapper
   docker
   docker-compose
+  vi-mode
+  globalias
 )
 
 source $ZSH/oh-my-zsh.sh
@@ -178,8 +181,17 @@ alias myip='ipconfig getifaddr en1 || ipconfig getifaddr en0'
 alias dif='diff --side-by-side --suppress-common-lines'
 alias named='find . -name'
 alias ql='qlmanage -p 2>/dev/null'
+
+# base64 encode and decode helper function for shell
+encode64(){ printf '%s' $1 | base64 }
+decode64(){ printf '%s' $1 | base64 --decode }
+alias e64=encode64
+alias d64=decode64
+# usage - e64 test and d64 dGVzdAo=
+
 alias -g b64='| base64'
 alias -g b64d='| base64 -D'
+# usage - echo "test" b64 and echo "dGVzdAo=" b64d
 
 
 #-------------------------------------------------------------
@@ -247,8 +259,9 @@ alias ipython='ipython --TerminalInteractiveShell.editing_mode=vi'
 alias ip='ipython'
 
 
-# autojump configuration
-[ -f /usr/local/etc/profile.d/autojump.sh ] && . /usr/local/etc/profile.d/autojump.sh
+# # autojump configuration
+# [ -f /usr/local/etc/profile.d/autojump.sh ] && . /usr/local/etc/profile.d/autojump.sh
+alias j='z'
 
 # rust config
 source $HOME/.cargo/env
@@ -289,6 +302,20 @@ export PATH="$PATH:$HOME/.rvm/bin"
 # key bindings
 # bindkey "\e[1~" beginning-of-line
 # bindkey "\e[4~" end-of-line
+
+# Beginning search with arrow keys
+bindkey "^[OA" up-line-or-beginning-search
+bindkey "^[OB" down-line-or-beginning-search
+bindkey -M vicmd "k" up-line-or-beginning-search
+bindkey -M vicmd "j" down-line-or-beginning-search
+
+function vi_mode_prompt_info() {
+  echo "${${KEYMAP/vicmd/[% NORMAL]%}/(main|viins)/[% INSERT]%}"
+}
+
+# define right prompt, regardless of whether the theme defined it
+RPS1='$(vi_mode_prompt_info)'
+RPS2=$RPS1
 
 # The next line updates PATH for the Google Cloud SDK.
 if [ -f '/Users/mahendra/google-cloud-sdk/path.zsh.inc' ]; then source '/Users/mahendra/google-cloud-sdk/path.zsh.inc'; fi
@@ -335,21 +362,26 @@ function vv() {
     fi
 }
 
-
-
 function VCDOTFILES() {
-    cd ${HOME}/dotfiles_mac/
-    echo "last commit:"
-    git log -1
+    cd $HOME/dotfiles_mac/
+    echo "last commit - \\n------------------------------------------"
+    git show --stat --oneline HEAD | tail
+    # git log -1 | tail
+    echo "------------------------------------------"
 
-    echo -e "\n\nCreating a commit of all the dotfiles"
-    if "$(git add -A && git commit -m "Backup Date: $(date)")"; then
-        echo "Yay!! Commit created successfully. Files changed:"
-        git show --stat --oneline HEAD
-    else
+    if git diff-index --quiet HEAD --; then
         echo "Opps: No dotfiles changed"
+    else
+        echo "\n\nCreating a commit of all the dotfiles"
+        git add -A && git commit -m "Backup Date: $(date)";
+        echo "Yay!! Commit created successfully. Files changed:"
+
+        echo "\\nNew commit - \\n------------------------------------------"
+        git show --stat --oneline HEAD | tail
+        echo "------------------------------------------"
     fi
 }
+
 
 function CLEANUP_DOCKER() {
     docker images | grep "none" | tr -s " " | cut -d " " -f 3 | uniq |  while read -r line; do echo -e "Removing > ${line}"; docker rmi -f ${line}; done
@@ -365,3 +397,6 @@ function CLEANUP_DOCKER() {
 
 
 alias pmr='python manage.py runserver'
+
+export EDITOR='vim'
+export KUBE_EDITOR="vim"

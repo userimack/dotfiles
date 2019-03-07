@@ -104,6 +104,9 @@ Plug 'z0mbix/vim-shfmt', { 'for': 'sh' }
 " go lang plugins
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 
+" vue plugin
+Plug 'posva/vim-vue'
+
 " " show ascii colours
 " Plug 'lilydjwg/colorizer'
 " " Colorizes everyword in the code
