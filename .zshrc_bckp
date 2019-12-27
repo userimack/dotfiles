@@ -270,6 +270,9 @@ alias tmux='tmux -u'
 # [ -f /usr/local/etc/profile.d/autojump.sh ] && . /usr/local/etc/profile.d/autojump.sh
 alias j='z'
 
+# rust config
+source $HOME/.cargo/env
+
 # Go development
 export GOPATH="${HOME}/go_projects"
 export GOBIN="${HOME}/go_projects/bin"
@@ -340,6 +343,9 @@ if [ -f '/Users/mahendra/.google-cloud-sdk/path.zsh.inc' ]; then source '/Users/
 # The next line enables shell command completion for gcloud.
 if [ -f '/Users/mahendra/.google-cloud-sdk/completion.zsh.inc' ]; then source '/Users/mahendra/.google-cloud-sdk/completion.zsh.inc'; fi
 
+
+# android configs
+export PATH=${PATH}:${HOME}/flutter/bin
 
 # vim configs
 alias vim='nvim'
@@ -450,9 +456,3 @@ alias pycov='pytest -sv --cov-report term-missing --cov=. '
 
 
 export PYTHON_CONFIGURE_OPTS="--enable-shared"
-
-# config for gere
-export GERRITCOLLABNAME=mahendra
-alias gelp='gere list-patchsets'
-alias gepc='gere pull-and-checkout'
-

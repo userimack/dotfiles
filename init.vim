@@ -18,7 +18,7 @@ Plug 'jistr/vim-nerdtree-tabs'
 " Configurable, flexible, intuitive text aligning
 Plug 'godlygeek/tabular'
 
-Plug 'plasticboy/vim-markdown'
+" Plug 'plasticboy/vim-markdown'
 
 " vim-markdown-wiki is a Vim plugin which eases the navigation between files in a personnal wiki based on markdown
 " Plug 'mmai/vim-markdown-wiki'
@@ -27,7 +27,7 @@ Plug 'plasticboy/vim-markdown'
 " Plug 'mmai/vim-scrum-markdown'
 
 Plug 'vim-syntastic/syntastic'
-Plug 'tpope/vim-surround'
+" Plug 'tpope/vim-surround'
 Plug 'kien/ctrlp.vim'
 " Plug 'vim-scripts/matchit.zip'
 
@@ -38,7 +38,7 @@ Plug 'kien/ctrlp.vim'
 " Plug 'klen/python-mode'
 
 " spawn matched brackets / quotes
-Plug 'jiangmiao/auto-pairs'
+" Plug 'jiangmiao/auto-pairs'
 "
 " show trailing spaces
 Plug 'bronson/vim-trailing-whitespace'
@@ -52,7 +52,18 @@ Plug 'tomasr/molokai'
 " Plug 'altercation/vim-colors-solarized'
 
 "
-Plug 'valloric/youcompleteme'
+" Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
+if has('nvim')
+  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+else
+  Plug 'Shougo/deoplete.nvim'
+  Plug 'roxma/nvim-yarp'
+  Plug 'roxma/vim-hug-neovim-rpc'
+endif
+" TabNine uses deep learning to help you write code faster.
+" Plug 'zxqfl/tabnine-vim'
+Plug 'tbodt/deoplete-tabnine', { 'do': './install.sh' }
+
 Plug 'scrooloose/nerdcommenter'
 " Plug 'vim-scripts/TaskList.vim'
 
@@ -62,6 +73,7 @@ Plug 'vim-airline/vim-airline-themes'
 " Plug 'xolox/vim-misc'
 " Plug 'xolox/vim-easytags'
 " Plug 'majutsushi/tagbar'
+"
 " Plug 'ludovicchabant/vim-gutentags'
 " Plug 'vim-scripts/a.vim'
 " Plug 'airblade/vim-gitgutter'
@@ -75,6 +87,7 @@ Plug 'flazz/vim-colorschemes'
 
 " fzf
 Plug '/usr/local/opt/fzf'
+"Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin' }
 Plug 'junegunn/fzf.vim'
 
 " protocol buffer support
@@ -82,17 +95,21 @@ Plug 'uarun/vim-protobuf'
 
 " dockerfile
 Plug 'ekalinin/Dockerfile.vim'
-Plug 'stephpy/vim-yaml'
+" Plug 'stephpy/vim-yaml'
 Plug 'tpope/vim-dotenv' " procfile support
 
 " vertical lines
 Plug 'yggdroot/indentline'
 
 " For autopep8, run using the command- :Autopep8
-Plug 'tell-k/vim-autopep8'
+" Plug 'tell-k/vim-autopep8'
+" Python code formatter
+Plug 'psf/black'
 
 " Javascript plugins
-Plug 'pangloss/vim-javascript'
+" Plug 'pangloss/vim-javascript'
+
+" Plug 'mxw/vim-jsx'
 
 " base64 converter
 Plug 'christianrondeau/vim-base64'
@@ -105,19 +122,32 @@ Plug 'z0mbix/vim-shfmt', { 'for': 'sh' }
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 
 " vue plugin
-Plug 'posva/vim-vue'
+" Plug 'posva/vim-vue'
 
 " " show ascii colours
 " Plug 'lilydjwg/colorizer'
 " " Colorizes everyword in the code
 " Plug 'numirias/semshi', {'do': ':UpdateRemotePlugins'}
 
+" Vim plugin to highlight Python source code lines that lack test coverage
+" :CoverageToggle and :CoverageShow
+Plug 'google/vim-maktaba'
+Plug 'google/vim-coverage'
+" Also add Glaive, which is used to configure coverage's maktaba flags. See
+" `:help :Glaive` for usage.
+Plug 'google/vim-glaive'
+" call glaive#Install()
+
+
+Plug 'johngrib/vim-game-snake'
+
+
 runtime macros/matchit.vim
 call plug#end()
 
 "-------------- PLUGINS END --------------------
 
-let g:python3_host_prog = '/usr/local/bin/python3'
+" let g:python3_host_prog = '/usr/local/bin/python3'
 
 set lazyredraw
 
@@ -194,7 +224,6 @@ set nostartofline      " when moving thru the lines, the cursor will try to stay
 " Formatting Options
 set wrap " Soft Wrap in all files, while hard wrap can be allow by filetype
 set linebreak " It maintains the whole words when wrapping
-set smartindent
 " execute "set colorcolumn=" . join(range(81,335), ',')
 " set colorcolumn=81
 
@@ -398,11 +427,13 @@ let g:syntastic_python_checkers=['flake8']
 " let g:syntastic_python_flake8_args='--ignore=E501,W391,E711,E701'
 
 function Py2()
-    let g:syntastic_python_python_exec = '/usr/bin/python'
+    " let g:syntastic_python_python_exec = '/usr/bin/python'
+    let g:syntastic_python_python_exec = '/Users/mahendra/.pyenv/shims/python'
 endfunction
 
 function Py3()
-    let g:syntastic_python_python_exec = '/usr/local/bin/python3'
+    " let g:syntastic_python_python_exec = '/usr/local/bin/python3'
+    let g:syntastic_python_python_exec = '/Users/mahendra/.pyenv/shims/python3'
 endfunction
 
 call Py3()
@@ -427,11 +458,11 @@ if executable('ag')
   let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
 endif
 
-" YCM configuration
-let g:ycm_global_ycm_extra_conf = "~/.config/nvim/.ycm_extra_conf.py"
-
-let g:ycm_key_list_select_completion=[]
-let g:ycm_key_list_previous_completion=[]
+" " YCM configuration
+" let g:ycm_global_ycm_extra_conf = "~/.config/nvim/.ycm_extra_conf.py"
+"
+" let g:ycm_key_list_select_completion=[]
+" let g:ycm_key_list_previous_completion=[]
 
 
 " NERD Commentor setting
@@ -544,7 +575,8 @@ highlight Pmenu ctermfg=15 ctermbg=0 guifg=#ffffff guibg=#000000
 " Autoindent according to file types
 autocmd Filetype html setlocal ts=2 sw=2 expandtab
 autocmd Filetype ruby setlocal ts=2 sw=2 expandtab
-autocmd Filetype javascript setlocal ts=4 sw=4 sts=0 noexpandtab
+autocmd Filetype javascript setlocal ts=2 sw=2 sts=0 noexpandtab
+autocmd Filetype vue setlocal ts=2 sw=2 sts=0 noexpandtab
 
 "gutentags settings
 set statusline+=%{gutentags#statusline()}
@@ -564,7 +596,7 @@ let g:shfmt_extra_args = '-i 2'
 
 
 " configs related to goFmt pluggin
-au FileType go map <leader>r :!go run %<CR>
+au FileType go map <leader>r :GoRun<CR>
 " au FileType go nmap <leader>r <Plug>(go-run-vertical)
 au FileType go nmap <leader>b <Plug>(go-build)
 au FileType go nmap <leader>t <Plug>(go-test)
@@ -591,3 +623,70 @@ au FileType go nmap <leader>c <Plug>(go-coverage)
 " endfunction
 " " autocmd FileType python call MyCustomHighlights()
 " autocmd ColorScheme * call MyCustomHighlights()
+
+" " don't use arrowkeys
+" noremap <Up> <NOP>
+" noremap <Down> <NOP>
+" noremap <Left> <NOP>
+" noremap <Right> <NOP>
+"
+" " really, just don't
+" inoremap <Up>    <NOP>
+" inoremap <Down>  <NOP>
+" inoremap <Left>  <NOP>
+" inoremap <Right> <NOP>
+
+" Tab configs
+nnoremap <C-t> :tabnew<CR>
+nnoremap <C-h> :tabprevious<CR>
+nnoremap <C-l> :tabnext<CR>
+
+" Set maximum allowed line length (default: 79)
+let g:autopep8_max_line_length=99
+" settings for python code formatter: black
+let g:black_linelength=99
+
+" autopairs setting
+" let g:AutoPairsShortcutToggle = 'ALT-p'
+
+let g:deoplete#enable_at_startup = 1
+
+" git blame setting
+command! -nargs=* Blame call s:GitBlame()
+
+function! s:GitBlame()
+    let cmd = "git blame -w " . bufname("%")
+    let nline = line(".") + 1
+    botright new
+    execute "$read !" . cmd
+    execute "normal " . nline . "gg"
+    execute "set filetype=perl"
+endfunction
+
+nnoremap <leader>gb :Blame<CR>
+
+" fzf configuration
+" File filnders
+nmap <Leader>f :GFiles<CR>
+nmap <Leader>F :Files<CR>
+
+"Buffer Finder
+nmap <Leader>b :Buffers<CR>
+nmap <Leader>h :History<CR>
+
+" Tag Finder
+nmap <Leader>t :BTags<CR>
+nmap <Leader>T :Tags<CR>
+
+" Line Finder
+nmap <Leader>l :BLines<CR>
+nmap <Leader>L :Lines<CR>
+nmap <Leader>' :Marks<CR>
+
+" Project Search
+nmap <Leader>/ :Ag<Space>
+nmap <Leader>/ :Rg<Space>
+
+
+" for js/coffee/jade files, 2 spaces
+autocmd FileType javascript setlocal ts=2 sts=2 sw=2
