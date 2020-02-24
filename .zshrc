@@ -456,3 +456,5 @@ export GERRITCOLLABNAME=mahendra
 alias gelp='gere list-patchsets'
 alias gepc='gere pull-and-checkout'
 
+# flutter setup
+export PATH="$PATH:$HOME/flutter/bin"

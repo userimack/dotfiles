@@ -62,7 +62,7 @@ else
 endif
 " TabNine uses deep learning to help you write code faster.
 " Plug 'zxqfl/tabnine-vim'
-Plug 'tbodt/deoplete-tabnine', { 'do': './install.sh' }
+" Plug 'tbodt/deoplete-tabnine', { 'do': './install.sh' }
 
 Plug 'scrooloose/nerdcommenter'
 " Plug 'vim-scripts/TaskList.vim'
@@ -94,9 +94,9 @@ Plug 'junegunn/fzf.vim'
 Plug 'uarun/vim-protobuf'
 
 " dockerfile
-Plug 'ekalinin/Dockerfile.vim'
+" Plug 'ekalinin/Dockerfile.vim'
 " Plug 'stephpy/vim-yaml'
-Plug 'tpope/vim-dotenv' " procfile support
+" Plug 'tpope/vim-dotenv' " procfile support
 
 " vertical lines
 Plug 'yggdroot/indentline'
@@ -116,7 +116,7 @@ Plug 'christianrondeau/vim-base64'
 
 " Autoformatter
 " Plug 'Chiel92/vim-autoformat'
-Plug 'z0mbix/vim-shfmt', { 'for': 'sh' }
+" Plug 'z0mbix/vim-shfmt', { 'for': 'sh' }
 
 " go lang plugins
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
@@ -131,11 +131,11 @@ Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 
 " Vim plugin to highlight Python source code lines that lack test coverage
 " :CoverageToggle and :CoverageShow
-Plug 'google/vim-maktaba'
-Plug 'google/vim-coverage'
+" Plug 'google/vim-maktaba'
+" Plug 'google/vim-coverage'
 " Also add Glaive, which is used to configure coverage's maktaba flags. See
 " `:help :Glaive` for usage.
-Plug 'google/vim-glaive'
+" Plug 'google/vim-glaive'
 " call glaive#Install()
 
 
