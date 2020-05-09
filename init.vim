@@ -104,7 +104,7 @@ Plug 'yggdroot/indentline'
 " For autopep8, run using the command- :Autopep8
 " Plug 'tell-k/vim-autopep8'
 " Python code formatter
-Plug 'psf/black'
+Plug 'psf/black', { 'commit': 'ce14fa8b497bae2b50ec48b3bd7022573a59cdb1' }
 
 " Javascript plugins
 " Plug 'pangloss/vim-javascript'
@@ -147,7 +147,8 @@ call plug#end()
 
 "-------------- PLUGINS END --------------------
 
-" let g:python3_host_prog = '/usr/local/bin/python3'
+let g:python3_host_prog = expand("$HOME/.virtualenvs/neovim_env/bin/python")
+let g:loaded_python_provider = 0
 
 set lazyredraw
 
@@ -690,3 +691,6 @@ nmap <Leader>/ :Rg<Space>
 
 " for js/coffee/jade files, 2 spaces
 autocmd FileType javascript setlocal ts=2 sts=2 sw=2
+
+" indenline and json.vim issue with not showing double quotes around json text
+autocmd Filetype json let g:indentLine_enabled = 0

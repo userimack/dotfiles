@@ -1,3 +1,6 @@
+# To disable insecure directory error
+ZSH_DISABLE_COMPFIX=true
+
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
@@ -62,15 +65,15 @@ ZSH_THEME="robbyrussell"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
+  zsh-completions
   z
   git
   kubectl
-  docker
-  virtualenvwrapper
-  docker
-  docker-compose
+  # docker
+  # docker-compose
   vi-mode
-  globalias
+  # globalias
+  pass
 )
 
 source $ZSH/oh-my-zsh.sh
@@ -334,12 +337,6 @@ function vi_mode_prompt_info() {
 RPS1='$(vi_mode_prompt_info)'
 RPS2=$RPS1
 
-# The next line updates PATH for the Google Cloud SDK.
-if [ -f '/Users/mahendra/.google-cloud-sdk/path.zsh.inc' ]; then source '/Users/mahendra/.google-cloud-sdk/path.zsh.inc'; fi
-
-# The next line enables shell command completion for gcloud.
-if [ -f '/Users/mahendra/.google-cloud-sdk/completion.zsh.inc' ]; then source '/Users/mahendra/.google-cloud-sdk/completion.zsh.inc'; fi
-
 
 # vim configs
 alias vim='nvim'
@@ -351,6 +348,7 @@ export VIRTUALENVWRAPPER_PYTHON=`which python3`
 export WORKON_HOME=$HOME/.virtualenvs
 export PIP_VIRTUALENV_BASE=$WORKON_HOME
 export PIP_RESPECT_VIRTUALENV=true
+
 if [[ -r /usr/local/bin/virtualenvwrapper.sh ]]; then
     source /usr/local/bin/virtualenvwrapper.sh
 else
@@ -377,7 +375,7 @@ function vv() {
 }
 
 function VCDOTFILES() {
-    cd $HOME/dotfiles_mac/
+    cd $HOME/dotfiles/
     echo "last commit - \\n------------------------------------------"
     git show --stat --oneline HEAD | tail
     # git log -1 | tail
@@ -431,7 +429,7 @@ export NVM_DIR="$HOME/.nvm"
 # chrome setup
 alias chrome="/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome"
 
-function most_used_commands {
+function MOST_USED_COMMANDS {
     history 0 $HISTSIZE | awk '{a[$2]++}END{for(i in a){print a[i] " " i}}' | sort -rn | head
 }
 
@@ -440,21 +438,36 @@ alias ipython3='ipython3 --TerminalInteractiveShell.editing_mode=vi'
 alias ipython='ipython --TerminalInteractiveShell.editing_mode=vi'
 alias ip='ipython'
 
-alias g='grep'
-
-# flutter
-# export PATH="$PATH:$HOME/flutter/bin"
-
 # pytest with coverage
 alias pycov='pytest -sv --cov-report term-missing --cov=. '
 
-
 export PYTHON_CONFIGURE_OPTS="--enable-shared"
 
-# config for gere
-export GERRITCOLLABNAME=mahendra
-alias gelp='gere list-patchsets'
-alias gepc='gere pull-and-checkout'
-
 # flutter setup
-export PATH="$PATH:$HOME/flutter/bin"
+# export PATH="$PATH:$HOME/flutter/bin"
+
+# Android SDK development setup
+export ANDROID_HOME=$HOME/Library/Android/sdk
+export PATH=$PATH:$ANDROID_HOME/emulator
+export PATH=$PATH:$ANDROID_HOME/tools
+export PATH=$PATH:$ANDROID_HOME/tools/bin
+export PATH=$PATH:$ANDROID_HOME/platform-tools
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/Users/mahendra/.google-cloud-sdk/path.zsh.inc' ]; then . '/Users/mahendra/.google-cloud-sdk/path.zsh.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/Users/mahendra/.google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/mahendra/.google-cloud-sdk/completion.zsh.inc'; fi
+
+
+
+eval "$(direnv hook zsh)"
+
+export PATH=${PATH}:/Users/mahendra/.local/bin
+alias ydl='youtube-dl'
+alias say='say -v Samantha'
+
+export HISTTIMEFORMAT="%d/%m/%y %T "
+alias find_dir_chmod='find . -type d -exec chmod 744 {} \;'
+alias find_file_chmod='find . -type f -exec chmod 644 {} \;'
+alias find_dup='gfind . ! -empty -type f -exec md5sum {} + 2>/dev/null | sort | guniq -w32 -dD '
