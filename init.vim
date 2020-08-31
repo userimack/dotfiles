@@ -22,36 +22,32 @@ Plug 'godlygeek/tabular'
 
 " vim-markdown-wiki is a Vim plugin which eases the navigation between files in a personnal wiki based on markdown
 " Plug 'mmai/vim-markdown-wiki'
-"
-" vim-scrum-markdown is a Vim plugin to manage a scrum dashboard inside vim
-" Plug 'mmai/vim-scrum-markdown'
 
 Plug 'vim-syntastic/syntastic'
 " Plug 'tpope/vim-surround'
 Plug 'kien/ctrlp.vim'
-" Plug 'vim-scripts/matchit.zip'
+Plug 'vim-scripts/matchit.zip'
 
+" SQL helper plugins
 " Plug 'vim-scripts/dbext.vim'
 "Plug 'vim-scripts/SQLComplete.vim'
-"
+
 " Helps in wrtign python scripts
 " Plug 'klen/python-mode'
 
-" spawn matched brackets / quotes
-" Plug 'jiangmiao/auto-pairs'
-"
-" show trailing spaces
-Plug 'bronson/vim-trailing-whitespace'
-"
-" smart relative numbering
- " Plug 'jeffkreeftmeijer/vim-numbertoggle'
-"
-" Theme
+Plug 'jiangmiao/auto-pairs' " spawn matched brackets / quotes
+
+Plug 'bronson/vim-trailing-whitespace' " show trailing spaces
+
+Plug 'hashivim/vim-terraform'
+
+
+" ------Theme------
 Plug 'tomasr/molokai'
 " Plug 'morhetz/gruvbox'
 " Plug 'altercation/vim-colors-solarized'
+" -----------------
 
-"
 " Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
 if has('nvim')
   Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
@@ -62,10 +58,8 @@ else
 endif
 " TabNine uses deep learning to help you write code faster.
 " Plug 'zxqfl/tabnine-vim'
-" Plug 'tbodt/deoplete-tabnine', { 'do': './install.sh' }
 
 Plug 'scrooloose/nerdcommenter'
-" Plug 'vim-scripts/TaskList.vim'
 
 " status line
 Plug 'vim-airline/vim-airline'
@@ -91,7 +85,7 @@ Plug '/usr/local/opt/fzf'
 Plug 'junegunn/fzf.vim'
 
 " protocol buffer support
-Plug 'uarun/vim-protobuf'
+" Plug 'uarun/vim-protobuf'
 
 " dockerfile
 " Plug 'ekalinin/Dockerfile.vim'
@@ -112,7 +106,7 @@ Plug 'psf/black', { 'commit': 'ce14fa8b497bae2b50ec48b3bd7022573a59cdb1' }
 " Plug 'mxw/vim-jsx'
 
 " base64 converter
-Plug 'christianrondeau/vim-base64'
+" Plug 'christianrondeau/vim-base64'
 
 " Autoformatter
 " Plug 'Chiel92/vim-autoformat'
@@ -139,8 +133,9 @@ Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 " call glaive#Install()
 
 
-Plug 'johngrib/vim-game-snake'
+" Plug 'johngrib/vim-game-snake'
 
+Plug 'hashivim/vim-terraform'
 
 runtime macros/matchit.vim
 call plug#end()
@@ -158,9 +153,9 @@ set lazyredraw
 " To format xml documents
 "map @@x !%xmllint --format --recover -^M
 " To format xml documents press Ctrl + x
-nmap <C-x> :%! xmllint --format -<CR>
+" nmap <C-x> :%! xmllint --format -<CR>
 " To format json documents press Ctrl + z
-nmap <C-z> :%!python -m json.tool<CR>
+" nmap <C-z> :%!python -m json.tool<CR>
 
 syntax enable
 "
@@ -423,6 +418,7 @@ let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
 
 let g:syntastic_sh_checkers = ["shellcheck"]
+let g:syntastic_go_checkers = ['go']
 
 let g:syntastic_python_checkers=['flake8']
 " let g:syntastic_python_flake8_args='--ignore=E501,W391,E711,E701'
@@ -597,11 +593,15 @@ let g:shfmt_extra_args = '-i 2'
 
 
 " configs related to goFmt pluggin
-au FileType go map <leader>r :GoRun<CR>
+au FileType go map <leader>r :GoRun %<CR>
+" let g:go_fmt_command = "goimports"
+
 " au FileType go nmap <leader>r <Plug>(go-run-vertical)
 au FileType go nmap <leader>b <Plug>(go-build)
 au FileType go nmap <leader>t <Plug>(go-test)
 au FileType go nmap <leader>c <Plug>(go-coverage)
+
+let g:go_def_mapping_enabled=0
 
 
 " " semshi configs
@@ -694,3 +694,20 @@ autocmd FileType javascript setlocal ts=2 sts=2 sw=2
 
 " indenline and json.vim issue with not showing double quotes around json text
 autocmd Filetype json let g:indentLine_enabled = 0
+
+" terraform config
+let g:terraform_align=1
+let g:terraform_fold_sections=0
+let g:terraform_fmt_on_save=1
+
+" To solve 'godef stack empty' in go files
+" let g:go_def_mapping_enabled=0
+
+" indentline : show dots for spaces
+let g:indentLine_leadingSpaceChar='·'
+let g:indentLine_leadingSpaceEnabled='1'
+
+
+" terraform vim settings
+let g:terraform_align=1
+let g:terraform_fmt_on_save=1

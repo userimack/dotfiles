@@ -1,0 +1,31 @@
+#!/bin/bash
+
+sandbox_init_nvm(){
+  # source $(brew --prefix nvm)/nvm.sh
+  export NVM_DIR="$HOME/.nvm"
+  [ -s "/usr/local/opt/nvm/nvm.sh" ] && . "/usr/local/opt/nvm/nvm.sh"  # This loads nvm
+  [ -s "/usr/local/opt/nvm/etc/bash_completion.d/nvm" ] && . "/usr/local/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
+}
+
+sandbox_init_rvm(){
+  if test -f ~/.rvm/scripts/rvm; then
+     [ "$(type rvm | grep -o function)" = "function" ] || source ~/.rvm/scripts/rvm
+  fi
+}
+
+sandbox_init_python(){
+    # Python virtual environments:
+    export VIRTUALENVWRAPPER_PYTHON=`which python3`
+    export WORKON_HOME=$HOME/.virtualenvs
+    export PIP_VIRTUALENV_BASE=$WORKON_HOME
+    export PIP_RESPECT_VIRTUALENV=true
+
+    if [[ -r /usr/local/bin/virtualenvwrapper.sh ]]; then
+        source /usr/local/bin/virtualenvwrapper.sh
+    else
+        echo "WARNING: Can't find virtualenvwrapper.sh"
+    fi
+}
+
+sandbox_hook python workon
+sandbox_hook python mkvirtualenv

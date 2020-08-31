@@ -1,3 +1,4 @@
+# zmodload zsh/zprof
 # To disable insecure directory error
 ZSH_DISABLE_COMPFIX=true
 
@@ -122,96 +123,11 @@ eval "$(pyenv init -)"
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 
-# function to go latest chnaged directory
-function ol ()
-{
-    latest_dir=$(ls -tr | tail -1);
-    echo "cding into $latest_dir";
-    cd "$latest_dir"
-}
-
-function sudo(){
-    cat ~/.sudoers.lecture
-    /usr/bin/sudo $@
-}
-
-
-# extract archives
-function extract()
-{
-    if [ -f $1 ] ; then
-        case $1 in
-            *.tar.bz2)   echo tar xvjf $1   && tar xvjf $1     ;;
-            *.tar.gz)    echo tar xvzf $1   && tar xvzf $1     ;;
-            *.bz2)       echo bunzip2 $1    && bunzip2 $1      ;;
-            *.rar)       echo unrar x $1    && unrar x $1      ;;
-            *.gz)        echo gunzip $1     &&  gunzip $1      ;;
-            *.tar)       echo tar xvf $1    &&  tar xvf $1   ;;
-            *.tbz2)      echo tar xvjf $1   &&  tar xvjf $1  ;;
-            *.tgz)       echo tar xvzf $1   && tar xvzf $1  ;;
-            *.zip)       echo unzip $1   && unzip $1      ;;
-            *.Z)         echo uncompress $1  &&  uncompress $1   ;;
-            *.7z)        echo 7z x $1    && 7z x $1       ;;
-            *)           echo "'$1' cannot be extracted via >extract<" ;;
-        esac
-    else
-        echo "'$1' is not a valid file!"
-    fi
-}
-
-# basic utils
-alias rm='rm -iv'
-alias cp='cp -iv'
-alias mv='mv -iv'
-
-# prevents accidentally clobbering files
-alias mkdir='mkdir -p'
-
-# pretty-print of some PATH variables
-alias path='echo -e ${PATH//:/\\n}'
-alias libpath='echo -e ${LD_LIBRARY_PATH//:/\\n}'
-
-# git related aliases
-# alias gc='git commit -am'
-alias gl='git log --graph --oneline --decorate --all'
-alias gs='git status -sb'
-alias gshow='git show --name-only --oneline HEAD'
-alias gshowf='git show --oneline'
-
-# web services
-alias weather='curl -s wttr.in/Hyderabad | head -7'
-alias weatherforecast='curl -s wttr.in/Hyderabad | head -37 | tail -30'
-qrcode() {
-    echo $@ | curl -F-=\<- qrenco.de
-}
-
-alias myip='ipconfig getifaddr en1 || ipconfig getifaddr en0'
-
-alias dif='diff --side-by-side --suppress-common-lines'
-alias named='find . -name'
-alias ql='qlmanage -p 2>/dev/null'
-
-# base64 encode and decode helper function for shell
-encode64(){ printf '%s' $1 | base64 }
-decode64(){ printf '%s' $1 | base64 --decode }
-alias e64=encode64
-alias d64=decode64
-# usage - e64 test and d64 dGVzdAo=
-
-alias -g b64='| base64'
-alias -g b64d='| base64 -D'
-# usage - echo "test" b64 and echo "dGVzdAo=" b64d
-
-# it helps in traversing files in different branches
-# Like: git show branch_name:/path/to/file.py | vim.py
-alias vim.py="vim - -c 'set syntax=python'"
-
-
 #-------------------------------------------------------------
 # zsh options
 #-------------------------------------------------------------
 
-# syntax highlighting
+# # syntax highlighting
 source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets pattern)
 
@@ -239,40 +155,6 @@ setopt HIST_IGNORE_DUPS
 zstyle ':completion:*' menu select
 
 
-#-------------------------------------------------------------
-# aliases
-#-------------------------------------------------------------
-alias d='deactivate'
-alias exa="exa -abghl --git"
-alias l='ls -lhtr'
-alias ll='ls -lhSr'  # -l = list , -h = human readable sizes, -S = Sort descending, -r = reverse sorting
-# alias server='echo "Starting server on $(ifconfig | grep "inet\ 192" | cut -d" " -f2):8000"; python2.7 -m SimpleHTTPServer'
-alias server='echo "Starting server on http://$(ipconfig getifaddr en1 || ipconfig getifaddr en0):8000"; python3 -m http.server'
-
-# using xc command whatever you pipe to it, it will print and copy the same to clipboard
-# alias xc='tee /dev/tty|xclip -selection clipboard'
-
-# Functions duone and dutwo are to get size of each file in the directory#
-function duone()
-{
-    du -k --max-depth 1 $1 | sort -n
-}
-
-function dutwo()
-{
-    du -hs * |sort -h -r
-}
-
-# removing rm command and using trash command
-alias rm="echo Use 'trash', or the full path i.e. '/bin/rm'"
-alias tmux='tmux -u'
-
-
-
-# # autojump configuration
-# [ -f /usr/local/etc/profile.d/autojump.sh ] && . /usr/local/etc/profile.d/autojump.sh
-alias j='z'
-
 # Go development
 export GOPATH="${HOME}/go_projects"
 export GOBIN="${HOME}/go_projects/bin"
@@ -280,16 +162,11 @@ export GOROOT="$(brew --prefix golang)/libexec"
 export PATH="$PATH:${GOPATH}/bin:${GOROOT}/bin:$HOME/bin"
 
 # iterm 2 shell integration config
-test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
+# test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 
 export PROTOC="${HOME}/.protoc"
 export PATH="$PATH:${PROTOC}/bin"
 
-alias notes='echo "python -m grpc_tools.protoc -I. --python_out=. --grpc_python_out=. <proto_file>.proto"'
-
-
-# source zsh_profile
-source ~/.zsh_profile
 export PATH="/usr/local/opt/openssl/bin:$PATH"
 export PATH="/usr/local/opt/icu4c/bin:$PATH"
 export PATH="/usr/local/opt/icu4c/sbin:$PATH"
@@ -297,12 +174,9 @@ export PATH="/usr/local/opt/icu4c/sbin:$PATH"
 
 export PATH="/usr/local/opt/gettext/bin:$PATH"
 
-export ANDROID_NDK_HOME=/usr/local/share/android-ndk
-
 # fzf settings https://github.com/junegunn/fzf
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 export FZF_DEFAULT_OPTS='--height 40% --reverse --border'
-
 
 # https://github.com/silvanocerza/dotfiles/blob/master/zsh/zshrc#L44-L55
 # If current selection is a text file shows its content,
@@ -315,9 +189,6 @@ elif [[ -d {} ]]; then
 else;
     tput setaf 1; echo YOU ARE NOT SUPPOSED TO SEE THIS!
 fi'"
-
-# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
-export PATH="$PATH:$HOME/.rvm/bin"
 
 # key bindings
 # bindkey "\e[1~" beginning-of-line
@@ -338,110 +209,12 @@ RPS1='$(vi_mode_prompt_info)'
 RPS2=$RPS1
 
 
-# vim configs
-alias vim='nvim'
-alias vi='nvim'
-alias vimdiff="nvim -d"
-
-# Python virtual environments:
-export VIRTUALENVWRAPPER_PYTHON=`which python3`
-export WORKON_HOME=$HOME/.virtualenvs
-export PIP_VIRTUALENV_BASE=$WORKON_HOME
-export PIP_RESPECT_VIRTUALENV=true
-
-if [[ -r /usr/local/bin/virtualenvwrapper.sh ]]; then
-    source /usr/local/bin/virtualenvwrapper.sh
-else
-    echo "WARNING: Can't find virtualenvwrapper.sh"
-fi
-
-# open up ~/.zshrc for editing, if present else ~/.bashrc
-function zz() {
-    if [ -f ${HOME}/.zshrc ]; then
-        vim ${HOME}/.zshrc
-    else
-        vim ${HOME}/.bashrc
-    fi
-}
-
-
-# open up ~/.config/nvim/init.vim for editing, or ~/.vimrc
-function vv() {
-    if [ -f ${HOME}/.config/nvim/init.vim ]; then
-        vim ${HOME}/.config/nvim/init.vim
-    else
-        vim ${HOME}/.vimrc
-    fi
-}
-
-function VCDOTFILES() {
-    cd $HOME/dotfiles/
-    echo "last commit - \\n------------------------------------------"
-    git show --stat --oneline HEAD | tail
-    # git log -1 | tail
-    echo "------------------------------------------"
-
-    if git diff-index --quiet HEAD --; then
-        echo "Opps: No dotfiles changed"
-    else
-        echo "\n\nCreating a commit of all the dotfiles"
-        git add -A && git commit -m "Backup Date: $(date)";
-        echo "Yay!! Commit created successfully. Files changed:"
-
-        echo "\\nNew commit - \\n------------------------------------------"
-        git show --stat --oneline HEAD | tail
-        echo "------------------------------------------"
-    fi
-}
-
-
-function CLEANUP_DOCKER() {
-    docker images | grep "none" | tr -s " " | cut -d " " -f 3 | uniq |  while read -r line; do echo -e "Removing > ${line}"; docker rmi -f ${line}; done
-    echo  -e "-- CLEAN UP OF DOCKER IMAGES IS DONE --\n\n"
-
-    docker images > /tmp/.docker_image_ids
-    # docker container ls -a | tr -s " " | cut -d " " -f2 | while read -r id; do if [ grep ${id} /tmp/.docker_image_ids ];  echo "> ${id}"; done
-    # docker container ls -a | tr -s " " | tail +2  | cut -d " " -f2 | while read -r id; do; if [ $(grep -c "${id}" /tmp/.docker_image_ids) -eq 0 ]; then echo "> Removing container - ${id}"; docker container rm "${id}"; fi; done
-}
 
 # uncomment to setup minikube - docker env
 # eval $(minikube docker-env)
 
-
-alias pmr='python manage.py runserver'
-
 export EDITOR='vim'
 export KUBE_EDITOR="vim"
-
-# Mac clean cache
-function CLEAN_MAC() { sudo /bin/rm -rf /Users/mahendra/Library/Caches 2>/dev/null; echo "Done"; }
-
-# Add commands and shortcuts in $HOME/.penv file
-if [ -f $HOME/.penv ]; then
-    source $HOME/.penv
-fi
-
-# nvm setup
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-# [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-
-# chrome setup
-alias chrome="/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome"
-
-function MOST_USED_COMMANDS {
-    history 0 $HISTSIZE | awk '{a[$2]++}END{for(i in a){print a[i] " " i}}' | sort -rn | head
-}
-
-# ipython aliases
-alias ipython3='ipython3 --TerminalInteractiveShell.editing_mode=vi'
-alias ipython='ipython --TerminalInteractiveShell.editing_mode=vi'
-alias ip='ipython'
-
-# pytest with coverage
-alias pycov='pytest -sv --cov-report term-missing --cov=. '
-
-export PYTHON_CONFIGURE_OPTS="--enable-shared"
 
 # flutter setup
 # export PATH="$PATH:$HOME/flutter/bin"
@@ -459,15 +232,30 @@ if [ -f '/Users/mahendra/.google-cloud-sdk/path.zsh.inc' ]; then . '/Users/mahen
 # The next line enables shell command completion for gcloud.
 if [ -f '/Users/mahendra/.google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/mahendra/.google-cloud-sdk/completion.zsh.inc'; fi
 
-
+# version control status
+DISABLE_UNTRACKED_FILES_DIRTY="true"
 
 eval "$(direnv hook zsh)"
 
 export PATH=${PATH}:/Users/mahendra/.local/bin
-alias ydl='youtube-dl'
-alias say='say -v Samantha'
 
 export HISTTIMEFORMAT="%d/%m/%y %T "
-alias find_dir_chmod='find . -type d -exec chmod 744 {} \;'
-alias find_file_chmod='find . -type f -exec chmod 644 {} \;'
-alias find_dup='gfind . ! -empty -type f -exec md5sum {} + 2>/dev/null | sort | guniq -w32 -dD '
+export PATH="/usr/local/opt/openjdk/bin:$PATH"
+
+
+#sandboxd
+source "$HOME/.config/sandboxd/sandboxd"
+
+source "$HOME/dotfiles/.zshrc.alias"
+source "$HOME/dotfiles/.zshrc.utils"
+
+# for timing
+# zprof
+
+autoload -U +X bashcompinit && bashcompinit
+complete -o nospace -C /usr/local/bin/terraform terraform
+export PATH="$HOME/.jenv/bin:$PATH"
+eval "$(jenv init -)"
+export TALISMAN_INTERACTIVE=true
+
+complete -o nospace -C /usr/local/bin/vault vault
