@@ -142,8 +142,8 @@ call plug#end()
 
 "-------------- PLUGINS END --------------------
 
-" let g:python3_host_prog = expand("$HOME/.virtualenvs/neovim_env/bin/python")
-" let g:loaded_python_provider = 0
+let g:python3_host_prog = expand("$HOME/.virtualenvs/neovim_env/bin/python")
+let g:loaded_python_provider = 0
 
 set lazyredraw
 

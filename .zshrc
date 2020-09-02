@@ -220,11 +220,11 @@ export KUBE_EDITOR="vim"
 # export PATH="$PATH:$HOME/flutter/bin"
 
 # Android SDK development setup
-export ANDROID_HOME=$HOME/Library/Android/sdk
-export PATH=$PATH:$ANDROID_HOME/emulator
-export PATH=$PATH:$ANDROID_HOME/tools
-export PATH=$PATH:$ANDROID_HOME/tools/bin
-export PATH=$PATH:$ANDROID_HOME/platform-tools
+#export ANDROID_HOME=$HOME/Library/Android/sdk
+#export PATH=$PATH:$ANDROID_HOME/emulator
+#export PATH=$PATH:$ANDROID_HOME/tools
+#export PATH=$PATH:$ANDROID_HOME/tools/bin
+#export PATH=$PATH:$ANDROID_HOME/platform-tools
 
 # The next line updates PATH for the Google Cloud SDK.
 if [ -f '/Users/mahendra/.google-cloud-sdk/path.zsh.inc' ]; then . '/Users/mahendra/.google-cloud-sdk/path.zsh.inc'; fi
@@ -258,4 +258,11 @@ export PATH="$HOME/.jenv/bin:$PATH"
 eval "$(jenv init -)"
 export TALISMAN_INTERACTIVE=true
 
+export PYENV_VIRTUALENVWRAPPER_PREFER_PYVENV="true"
+export WORKON_HOME=$HOME/.virtualenvs
+pyenv virtualenvwrapper_lazy
+
 complete -o nospace -C /usr/local/bin/vault vault
+
+export PATH="/usr/local/opt/gnu-tar/libexec/gnubin:/usr/local/opt/grep/libexec/gnubin:/usr/local/opt/gnu-sed/libexec/gnubin:/usr/local/opt/gnu-indent/libexec/gnubin:/usr/local/opt/findutils/libexec/gnubin:$PATH"
+export PATH="/usr/local/opt/ruby/bin:$PATH"
