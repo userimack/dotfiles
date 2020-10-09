@@ -103,3 +103,30 @@ alias say='say -v Samantha'
 alias find_dir_chmod='find . -type d -exec chmod 744 {} \;'
 alias find_file_chmod='find . -type f -exec chmod 644 {} \;'
 alias find_dup='gfind . ! -empty -type f -exec md5sum {} + 2>/dev/null | sort | guniq -w32 -dD '
+
+
+
+# Add the following to .zshrc/.bashrc...etc
+# Allows setting default namespace while working with kubectl #
+
+alias k='kubectl'
+alias kcc='kubectl config current-context'
+alias kgc='kubectl config get-contexts'
+alias kge='kubectl get events --sort-by='\''{.lastTimestamp}'\'
+alias kgp='kubectl get pods'
+alias kl='kubectl logs '
+alias kpf='kubectl port-forward'
+alias ksc='kubectl config use-context'
+
+alias ksn='_f(){k get namespace $1 > /dev/null; if [ $? -eq 1 ]; then return $?; fi;  k config set-context $(k config current-context) --namespace=$1; echo "Namespace: $1"};_f'
+
+#Usage:
+#➜  ~ ksn dev1                                                       (dev-context/dev1)
+#     Context "dev-context" modified.
+#     Namespace: dev1
+
+#➜  ~ ksn ff                                                         (dev-context/dev1)
+#     Error from server (NotFound): namespaces "ff" not found
+
+
+

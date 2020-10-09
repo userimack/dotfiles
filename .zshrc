@@ -75,6 +75,7 @@ plugins=(
   vi-mode
   # globalias
   pass
+  zsh-autosuggestions
 )
 
 source $ZSH/oh-my-zsh.sh
@@ -150,6 +151,7 @@ HISTFILE=~/.histfile
 HISTSIZE=1000000000
 SAVEHIST=1000000000
 setopt HIST_IGNORE_DUPS
+HISTORY_IGNORE='([bf]g *|cd ..|l[alsh]#( *)#|less *|vim# *)'
 
 
 zstyle ':completion:*' menu select
@@ -266,3 +268,4 @@ complete -o nospace -C /usr/local/bin/vault vault
 
 export PATH="/usr/local/opt/gnu-tar/libexec/gnubin:/usr/local/opt/grep/libexec/gnubin:/usr/local/opt/gnu-sed/libexec/gnubin:/usr/local/opt/gnu-indent/libexec/gnubin:/usr/local/opt/findutils/libexec/gnubin:$PATH"
 export PATH="/usr/local/opt/ruby/bin:$PATH"
+[ -f "/Users/mahendra/.ghcup/env" ] && source "/Users/mahendra/.ghcup/env" # ghcup-env
