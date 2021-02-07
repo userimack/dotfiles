@@ -98,7 +98,7 @@ Plug 'yggdroot/indentline'
 " For autopep8, run using the command- :Autopep8
 " Plug 'tell-k/vim-autopep8'
 " Python code formatter
-Plug 'psf/black', { 'commit': 'ce14fa8b497bae2b50ec48b3bd7022573a59cdb1' }
+" Plug 'psf/black'
 
 " Javascript plugins
 " Plug 'pangloss/vim-javascript'
@@ -711,3 +711,14 @@ let g:indentLine_leadingSpaceEnabled='1'
 " terraform vim settings
 let g:terraform_align=1
 let g:terraform_fmt_on_save=1
+
+
+filetype plugin indent on
+autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab indentkeys-=<:>
+
+" Enable true colors if available
+set termguicolors
+colorscheme gruvbox
+" Enable italics, Make sure this is immediately after colorscheme
+" https://stackoverflow.com/questions/3494435/vimrc-make-comments-italic
+highlight Comment cterm=italic gui=italic

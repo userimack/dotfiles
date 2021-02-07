@@ -268,4 +268,37 @@ complete -o nospace -C /usr/local/bin/vault vault
 
 export PATH="/usr/local/opt/gnu-tar/libexec/gnubin:/usr/local/opt/grep/libexec/gnubin:/usr/local/opt/gnu-sed/libexec/gnubin:/usr/local/opt/gnu-indent/libexec/gnubin:/usr/local/opt/findutils/libexec/gnubin:$PATH"
 export PATH="/usr/local/opt/ruby/bin:$PATH"
-[ -f "/Users/mahendra/.ghcup/env" ] && source "/Users/mahendra/.ghcup/env" # ghcup-env
+
+# # >>> conda initialize >>>
+# # !! Contents within this block are managed by 'conda init' !!
+# __conda_setup="$('/Users/mahendra/opt/miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+# if [ $? -eq 0 ]; then
+#     eval "$__conda_setup"
+# else
+#     if [ -f "/Users/mahendra/opt/miniconda3/etc/profile.d/conda.sh" ]; then
+#         . "/Users/mahendra/opt/miniconda3/etc/profile.d/conda.sh"
+#     else
+#         export PATH="/Users/mahendra/opt/miniconda3/bin:$PATH"
+#     fi
+# fi
+# unset __conda_setup
+# # <<< conda initialize <<<
+
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "/usr/local/opt/nvm/nvm.sh" ] && . "/usr/local/opt/nvm/nvm.sh"  # This loads nvm
+# [ -s "/usr/local/opt/nvm/etc/bash_completion.d/nvm" ] && . "/usr/local/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
+#
+function path(){
+    old=$IFS
+    IFS=:
+    printf "%s\n" $PATH
+    IFS=$old
+}
+
+export AIRFLOW_HOME=~/airflow
+export MLFLOW_TRACKING_URI=http://localhost:5000
+# source ~/miniconda/bin/activate
+# source ~/.profile
+
+source ~/.oh-my-zsh/custom/completion.k3d.config

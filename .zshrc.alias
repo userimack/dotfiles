@@ -128,5 +128,10 @@ alias ksn='_f(){k get namespace $1 > /dev/null; if [ $? -eq 1 ]; then return $?;
 #➜  ~ ksn ff                                                         (dev-context/dev1)
 #     Error from server (NotFound): namespaces "ff" not found
 
+alias cat='bat'
 
+function ansible_doc() {
+    ansible-doc "$1" | bat --language=yml
+}
 
+alias tf='terraform'

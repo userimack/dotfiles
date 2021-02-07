@@ -7,7 +7,7 @@ function ol ()
 }
 
 function sudo(){
-    cat ~/.sudoers.lecture
+    \cat ~/.sudoers.lecture
     /usr/bin/sudo $@
 }
 
