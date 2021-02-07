@@ -6,10 +6,31 @@ env:
 
 window:
   # Spread additional padding evenly around the terminal content.
-  dynamic_padding: true
+  dynamic_padding: false
+  dynamic_title: true
+  # Window dimensions in character columns and lines
+  # (changes require restart)
+  dimensions:
+    columns: 200
+    lines: 48
+  # Window decorations
+  # Setting this to false will result in window without borders and title bar.
+  decorations: full
 
   # Startup Mode (changes require restart)
   # startup_mode: Fullscreen
+
+# When true, bold text is drawn using the bright variant of colors.
+draw_bold_text_with_bright_colors: true
+
+scrolling:
+  # Maximum number of lines in the scrollback buffer.
+  # Specifying '0' will disable scrolling.
+  history: 10000
+
+  # Number of lines the viewport will move for every line scrolled when
+  # scrollback is enabled (history > 0).
+  multiplier: 3
 
 # Sample Font configuration for font: Monoid.
 # Feel free to use different font configuration family & face for each sections
@@ -74,6 +95,69 @@ selection:
 # Live config reload (changes require restart)
 live_config_reload: true
 
+# Colors (Gruvbox dark)
+colors:
+  # Default colors
+  primary:
+    # hard contrast: background = '#1d2021'
+    background: '#282828'
+    # soft contrast: background = '#32302f'
+    foreground: '#ebdbb2'
+
+  # Normal colors
+  normal:
+    black:   '#282828'
+    red:     '#cc241d'
+    green:   '#98971a'
+    yellow:  '#d79921'
+    blue:    '#458588'
+    magenta: '#b16286'
+    cyan:    '#689d6a'
+    white:   '#a89984'
+
+  # Bright colors
+  bright:
+    black:   '#928374'
+    red:     '#fb4934'
+    green:   '#b8bb26'
+    yellow:  '#fabd2f'
+    blue:    '#83a598'
+    magenta: '#d3869b'
+    cyan:    '#8ec07c'
+    white:   '#ebdbb2'
+
+bell:
+  animation: EaseOutExpo
+  duration: 0
+
+# Background opacity
+background_opacity: 1.0
+
+cursor:
+  # Cursor style
+  #
+  # Values for 'style':
+  #   - ▇ Block
+  #   - _ Underline
+  #   - | Beam
+  style: Block
+  unfocused_hollow: false
+
+# Shell
+#
+# You can set shell.program to the path of your favorite shell, e.g. /bin/zsh.
+# Entries in shell.args are passed unmodified as arguments to the shell.
+#
+shell:
+  program: /usr/local/bin/zsh
+  args:
+    - --login
+  program: /usr/local/bin/tmux
+  args:
+   - new
+   - -A
+   - -s main
+
 # Setup some amazing custom key bindings here - Best thing is you can setup key bindings
 # using Mac's 'command' to control your tmux.
 # A great reference: https://arslan.io/2018/02/05/gpu-accelerated-terminal-alacritty/#make-alacritty-feel-like-iterm2
@@ -105,35 +189,3 @@ key_bindings:
   - { key: Down,  mods: Command,       chars: "\x06\x4a" }
   - { key: Up,    mods: Command,       chars: "\x06\x4b" }
   - { key: Right, mods: Command,       chars: "\x06\x4c" }
-
-
-# Colors (Gruvbox dark)
-colors:
-  # Default colors
-  primary:
-    # hard contrast: background = '#1d2021'
-    background: '#282828'
-    # soft contrast: background = '#32302f'
-    foreground: '#ebdbb2'
-
-  # Normal colors
-  normal:
-    black:   '#282828'
-    red:     '#cc241d'
-    green:   '#98971a'
-    yellow:  '#d79921'
-    blue:    '#458588'
-    magenta: '#b16286'
-    cyan:    '#689d6a'
-    white:   '#a89984'
-
-  # Bright colors
-  bright:
-    black:   '#928374'
-    red:     '#fb4934'
-    green:   '#b8bb26'
-    yellow:  '#fabd2f'
-    blue:    '#83a598'
-    magenta: '#d3869b'
-    cyan:    '#8ec07c'
-    white:   '#ebdbb2'
