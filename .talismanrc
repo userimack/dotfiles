@@ -1,14 +1,15 @@
 fileignoreconfig:
+- filename: .bashrc
+  checksum: 2f310381c2dd493c180f285ecf07e20927b7d78aaf3afcaa3c3ad350d8f8e6fb
 - filename: .tmux.conf
   checksum: 7c8e00a1eef3f5188b3ff972e279452331e1d5b7dc1ef49ed3d09cd2adf0e37c
 - filename: .zshrc
-  checksum: 8e94c44cd9a166a7b8cd1a0384b9a70ac4c333d9a0d94710efaf549b7e7a54e6
+  checksum: a780597395642c1b7de3e28c95499cf3a6d22797fd706d956300024c45fc5c9d
 - filename: alacritty/alacritty.yml
   checksum: 72edd64d786a39c3b247fe35371b5f308cff2ed9eaf8c0f29d6f8dcb4f419a18
 - filename: init.vim
   checksum: 0b87d0c1113853ec67a8d8155b8482dd7fd58d8cd193eb0eedb6015f5ac159fb
-- filename: .tmux.conf
-  checksum: 7c8e00a1eef3f5188b3ff972e279452331e1d5b7dc1ef49ed3d09cd2adf0e37c
+7c
 - filename: .zshrc
   checksum: 8e94c44cd9a166a7b8cd1a0384b9a70ac4c333d9a0d94710efaf549b7e7a54e6
 - filename: alacritty/alacritty.yml

@@ -41,18 +41,18 @@ font:
   # UI for powerline & tmux bottom bar.
   normal:
     # Font name
-    family: Monoid
+    family: Monoid Nerd Font
     # Font face
     style: Retina
 
   # Bold font face
   bold:
-    family: Monoid
+    family: Monoid Nerd Font
     style: Bold
 
   # Italic font face
   italic:
-    family: Monoid
+    family: Monoid Nerd Font
     style: Italic
 
   # Bold italic font face
@@ -60,7 +60,7 @@ font:
   # italic & it just works. You may specifiy the bold italic version if it exists
   # for your font
   bold_italic:
-    family: Monoid
+    family: Monoid Nerd Font
     style: Italic
 
   # Font size
@@ -152,11 +152,11 @@ shell:
   program: /usr/local/bin/zsh
   args:
     - --login
-  program: /usr/local/bin/tmux
-  args:
-   - new
-   - -A
-   - -s main
+  # program: /usr/local/bin/tmux
+  # args:
+  #  - new
+  #  - -A
+  #  - -s main
 
 # Setup some amazing custom key bindings here - Best thing is you can setup key bindings
 # using Mac's 'command' to control your tmux.

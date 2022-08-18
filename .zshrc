@@ -75,7 +75,7 @@ plugins=(
   vi-mode
   # globalias
   pass
-  zsh-autosuggestions
+  # zsh-autosuggestions
 )
 
 source $ZSH/oh-my-zsh.sh
@@ -117,8 +117,13 @@ source $ZSH/oh-my-zsh.sh
 # set -o vi
 
 
+export PROTOC="${HOME}/.protoc"
+export PATH="$PATH:/usr/local/bin:${PROTOC}/bin"
+
 # pyenv setup
 eval "$(pyenv init -)"
+# To enable auto-activation add to your profile:
+if which pyenv-virtualenv-init > /dev/null; then eval "$(pyenv virtualenv-init -)"; fi
 
 
 export LC_ALL=en_US.UTF-8
@@ -156,7 +161,6 @@ HISTORY_IGNORE='([bf]g *|cd ..|l[alsh]#( *)#|less *|vim# *)'
 
 zstyle ':completion:*' menu select
 
-
 # Go development
 export GOPATH="${HOME}/go_projects"
 export GOBIN="${HOME}/go_projects/bin"
@@ -165,9 +169,6 @@ export PATH="$PATH:${GOPATH}/bin:${GOROOT}/bin:$HOME/bin"
 
 # iterm 2 shell integration config
 # test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
-
-export PROTOC="${HOME}/.protoc"
-export PATH="$PATH:${PROTOC}/bin"
 
 export PATH="/usr/local/opt/openssl/bin:$PATH"
 export PATH="/usr/local/opt/icu4c/bin:$PATH"
@@ -178,7 +179,9 @@ export PATH="/usr/local/opt/gettext/bin:$PATH"
 
 # fzf settings https://github.com/junegunn/fzf
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-export FZF_DEFAULT_OPTS='--height 40% --reverse --border'
+export FZF_DEFAULT_COMMAND="fd --type file --color=always"
+export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+export FZF_DEFAULT_OPTS='--height 40% --reverse --border --ansi'
 
 # https://github.com/silvanocerza/dotfiles/blob/master/zsh/zshrc#L44-L55
 # If current selection is a text file shows its content,
@@ -228,28 +231,292 @@ export KUBE_EDITOR="vim"
 #export PATH=$PATH:$ANDROID_HOME/tools/bin
 #export PATH=$PATH:$ANDROID_HOME/platform-tools
 
-# The next line updates PATH for the Google Cloud SDK.
-if [ -f '/Users/mahendra/.google-cloud-sdk/path.zsh.inc' ]; then . '/Users/mahendra/.google-cloud-sdk/path.zsh.inc'; fi
-
-# The next line enables shell command completion for gcloud.
-if [ -f '/Users/mahendra/.google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/mahendra/.google-cloud-sdk/completion.zsh.inc'; fi
-
 # version control status
 DISABLE_UNTRACKED_FILES_DIRTY="true"
 
 eval "$(direnv hook zsh)"
 
-export PATH=${PATH}:/Users/mahendra/.local/bin
-
 export HISTTIMEFORMAT="%d/%m/%y %T "
 export PATH="/usr/local/opt/openjdk/bin:$PATH"
 
 
-#sandboxd
+# #sandboxd
 source "$HOME/.config/sandboxd/sandboxd"
+#
+# ############################################## ALIAS #######################################
+# source "$HOME/dotfiles/.zshrc.alias"
 
-source "$HOME/dotfiles/.zshrc.alias"
-source "$HOME/dotfiles/.zshrc.utils"
+#-------------------------------------------------------------
+# aliases
+#-------------------------------------------------------------
+
+# basic utils
+alias rm='rm -iv'
+alias cp='cp -iv'
+alias mv='mv -iv'
+
+# prevents accidentally clobbering files
+alias mkdir='mkdir -p'
+
+# pretty-print of some PATH variables
+alias path='echo -e ${PATH//:/\\n}'
+alias libpath='echo -e ${LD_LIBRARY_PATH//:/\\n}'
+
+# git related aliases
+# alias gc='git commit -am'
+alias gl='git log --graph --oneline --decorate --all'
+alias gs='git status -sb'
+alias gshow='git show --name-only --oneline HEAD'
+alias gshowf='git show --oneline'
+
+# web services
+alias weather='curl -s wttr.in/Hyderabad | head -7'
+alias weatherforecast='curl -s wttr.in/Hyderabad | head -37 | tail -30'
+qrcode() {
+    echo $@ | curl -F-=\<- qrenco.de
+}
+
+alias myip='ipconfig getifaddr en1 || ipconfig getifaddr en0'
+
+alias dif='diff --side-by-side --suppress-common-lines'
+alias named='find . -name'
+alias ql='qlmanage -p 2>/dev/null'
+
+# base64 encode and decode helper function for shell
+encode64(){ printf '%s' $1 | base64 }
+decode64(){ printf '%s' $1 | base64 --decode }
+alias e64=encode64
+alias d64=decode64
+# usage - e64 test and d64 dGVzdAo=
+
+alias -g b64='| base64'
+alias -g b64d='| base64 -D'
+# usage - echo "test" b64 and echo "dGVzdAo=" b64d
+
+# it helps in traversing files in different branches
+# Like: git show branch_name:/path/to/file.py | vim.py
+alias vim.py="vim - -c 'set syntax=python'"
+
+# vim configs
+alias vim='nvim'
+alias vi='nvim'
+alias vimdiff="nvim -d"
+
+alias d='deactivate'
+alias exa="exa -abghl --git"
+alias l='ls -lhtr'
+alias ll='ls -lhSr'  # -l = list , -h = human readable sizes, -S = Sort descending, -r = reverse sorting
+# alias server='echo "Starting server on $(ifconfig | grep "inet\ 192" | cut -d" " -f2):8000"; python2.7 -m SimpleHTTPServer'
+alias server='echo "Starting server on http://$(ipconfig getifaddr en1 || ipconfig getifaddr en0):8000"; python3 -m http.server'
+
+# using xc command whatever you pipe to it, it will print and copy the same to clipboard
+# alias xc='tee /dev/tty|xclip -selection clipboard'
+
+
+# Functions duone and dutwo are to get size of each file in the directory#
+function duone()
+{
+    du -k --max-depth 1 $1 | sort -n
+}
+
+function dutwo()
+{
+    du -hs * |sort -h -r
+}
+
+# removing rm command and using trash command
+# alias rm="echo Use 'trash', or the full path i.e. '/bin/rm'"
+alias tmux='tmux -u'
+
+# # autojump configuration
+[ -f /usr/local/etc/profile.d/autojump.sh ] && . /usr/local/etc/profile.d/autojump.sh
+alias j='z'
+
+alias pmr='python manage.py runserver'
+
+# chrome setup
+alias chrome="/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome"
+
+# ipython aliases
+alias ipython3='ipython3 --TerminalInteractiveShell.editing_mode=vi'
+alias ipython='ipython --TerminalInteractiveShell.editing_mode=vi'
+alias ip='ipython'
+
+# pytest with coverage
+alias pycov='pytest -sv --cov-report term-missing --cov=. '
+
+alias ydl='youtube-dl'
+alias say='say -v Samantha'
+
+alias find_dir_chmod='find . -type d -exec chmod 744 {} \;'
+alias find_file_chmod='find . -type f -exec chmod 644 {} \;'
+alias find_dup='gfind . ! -empty -type f -exec md5sum {} + 2>/dev/null | sort | guniq -w32 -dD '
+
+
+
+# Add the following to .zshrc/.bashrc...etc
+# Allows setting default namespace while working with kubectl #
+
+alias k='kubectl'
+alias kcc='kubectl config current-context'
+alias kgc='kubectl config get-contexts'
+alias kge='kubectl get events --sort-by='\''{.lastTimestamp}'\'
+alias kgp='kubectl get pods'
+alias kl='kubectl logs '
+alias kpf='kubectl port-forward'
+alias ksc='kubectl config use-context'
+
+alias ksn='_f(){k get namespace $1 > /dev/null; if [ $? -eq 1 ]; then return $?; fi;  k config set-context $(k config current-context) --namespace=$1; echo "Namespace: $1"};_f'
+
+alias knl="kubectl config get-contexts"
+alias kn='kubectl config set-context --current --namespace '
+# kn default
+
+#Usage:
+#➜  ~ ksn dev1                                                       (dev-context/dev1)
+#     Context "dev-context" modified.
+#     Namespace: dev1
+
+#➜  ~ ksn ff                                                         (dev-context/dev1)
+#     Error from server (NotFound): namespaces "ff" not found
+
+alias cat='bat'
+
+function ansible_doc() {
+    ansible-doc "$1" | bat --language=yml
+}
+
+alias tf='terraform'
+
+alias pp='jq -C . | less -FX'
+#cat foo.json | pp
+
+alias dfimage="docker run -v /var/run/docker.sock:/var/run/docker.sock --rm alpine/dfimage"
+
+#function dih {docker history --no-trunc $argv  | tac | tr -s ' ' | cut -d " " -f 5- | sed 's,^/bin/sh -c #(nop) ,,g' | sed 's,^/bin/sh -c,RUN,g' | sed 's, && ,\n  & ,g' | sed 's,\s*[0-9]*[\.]*[0-9]*\s*[kMG]*B\s*$,,g' | head -n -1}
+#
+
+# install required: brew install lsd
+alias ls='lsd'
+alias l='ls -l'
+alias la='ls -a'
+alias lla='ls -la'
+alias lt='ls --tree'
+
+alias du='dust'
+alias df='duf'
+alias curl='curlie'
+
+
+alias gp_stop='launchctl unload /Library/LaunchAgents/com.paloaltonetworks.gp.pangp*'
+alias gp_start='launchctl load /Library/LaunchAgents/com.paloaltonetworks.gp.pangp*'
+
+
+##############################################################################################
+#
+# ############################################## UTILS #######################################
+#
+# source "$HOME/dotfiles/.zshrc.utils"
+# # function to go latest chnaged directory
+function ol ()
+{
+    latest_dir=$(ls -tr | tail -1);
+    echo "cding into $latest_dir";
+    cd "$latest_dir"
+}
+
+function sudo(){
+    \cat ~/.sudoers.lecture
+    /usr/bin/sudo $@
+}
+
+
+# extract archives
+function extract()
+{
+    if [ -f $1 ] ; then
+        case $1 in
+            *.tar.bz2)   echo tar xvjf $1   && tar xvjf $1     ;;
+            *.tar.gz)    echo tar xvzf $1   && tar xvzf $1     ;;
+            *.bz2)       echo bunzip2 $1    && bunzip2 $1      ;;
+            *.rar)       echo unrar x $1    && unrar x $1      ;;
+            *.gz)        echo gunzip $1     &&  gunzip $1      ;;
+            *.tar)       echo tar xvf $1    &&  tar xvf $1   ;;
+            *.tbz2)      echo tar xvjf $1   &&  tar xvjf $1  ;;
+            *.tgz)       echo tar xvzf $1   && tar xvzf $1  ;;
+            *.zip)       echo unzip $1   && unzip $1      ;;
+            *.Z)         echo uncompress $1  &&  uncompress $1   ;;
+            *.7z)        echo 7z x $1    && 7z x $1       ;;
+            *)           echo "'$1' cannot be extracted via >extract<" ;;
+        esac
+    else
+        echo "'$1' is not a valid file!"
+    fi
+}
+
+# open up ~/.zshrc for editing, if present else ~/.bashrc
+function zz() {
+    if [ -f ${HOME}/.zshrc ]; then
+        vim ${HOME}/.zshrc
+    else
+        vim ${HOME}/.bashrc
+    fi
+}
+
+
+# open up ~/.config/nvim/init.vim for editing, or ~/.vimrc
+function vv() {
+    if [ -f ${HOME}/.config/nvim/init.vim ]; then
+        vim ${HOME}/.config/nvim/init.vim
+    else
+        vim ${HOME}/.vimrc
+    fi
+}
+
+function VCDOTFILES() {
+    cd $HOME/dotfiles/
+    echo "last commit - \\n------------------------------------------"
+    git show --stat --oneline HEAD | tail
+    # git log -1 | tail
+    echo "------------------------------------------"
+
+    if git diff-index --quiet HEAD --; then
+        echo "Opps: No dotfiles changed"
+    else
+        echo "\n\nCreating a commit of all the dotfiles"
+        git add -A && git commit -m "Backup Date: $(date)";
+        echo "Yay!! Commit created successfully. Files changed:"
+
+        echo "\\nNew commit - \\n------------------------------------------"
+        git show --stat --oneline HEAD | tail
+        echo "------------------------------------------"
+    fi
+}
+
+
+function CLEANUP_DOCKER() {
+    docker system df
+    #docker image prune -a
+    docker images | grep "none" | tr -s " " | cut -d " " -f 3 | uniq |  while read -r line; do echo -e "Removing > ${line}"; docker rmi -f ${line}; done
+    echo  -e "-- CLEAN UP OF DOCKER IMAGES IS DONE --\n\n"
+
+    docker images > /tmp/.docker_image_ids
+    # docker container ls -a | tr -s " " | cut -d " " -f2 | while read -r id; do if [ grep ${id} /tmp/.docker_image_ids ];  echo "> ${id}"; done
+    # docker container ls -a | tr -s " " | tail +2  | cut -d " " -f2 | while read -r id; do; if [ $(grep -c "${id}" /tmp/.docker_image_ids) -eq 0 ]; then echo "> Removing container - ${id}"; docker container rm "${id}"; fi; done
+    docker system df
+
+}
+
+
+# Mac clean cache
+function CLEAN_MAC() { sudo /bin/rm -rf /Users/mahendra/Library/Caches 2>/dev/null; echo "Done"; }
+
+
+function MOST_USED_COMMANDS {
+    history 0 $HISTSIZE | awk '{a[$2]++}END{for(i in a){print a[i] " " i}}' | sort -rn | head
+}
+
+########################################################################################################################
 
 # for timing
 # zprof
@@ -266,7 +533,7 @@ pyenv virtualenvwrapper_lazy
 
 complete -o nospace -C /usr/local/bin/vault vault
 
-export PATH="/usr/local/opt/gnu-tar/libexec/gnubin:/usr/local/opt/grep/libexec/gnubin:/usr/local/opt/gnu-sed/libexec/gnubin:/usr/local/opt/gnu-indent/libexec/gnubin:/usr/local/opt/findutils/libexec/gnubin:$PATH"
+export PATH="/usr/local/opt/gnu-tar/libexec/gnubin:/usr/local/opt/grep/libexec/gnubin:/usr/local/opt/gnu-sed/libexec/gnubin:/usr/local/opt/gnu-indent/libexec/gnubin:/usr/local/opt/findutils/libexec/gnubin:/usr/local/opt/gnu-tar/libexec/gnubin:$PATH"
 export PATH="/usr/local/opt/ruby/bin:$PATH"
 
 # # >>> conda initialize >>>
@@ -302,3 +569,81 @@ export MLFLOW_TRACKING_URI=http://localhost:5000
 # source ~/.profile
 
 source ~/.oh-my-zsh/custom/completion.k3d.config
+export BYOBU_PREFIX=/usr/local
+
+# heroku autocomplete setup
+HEROKU_AC_ZSH_SETUP_PATH=/Users/mahendra/Library/Caches/heroku/autocomplete/zsh_setup && test -f $HEROKU_AC_ZSH_SETUP_PATH && source $HEROKU_AC_ZSH_SETUP_PATH;
+# heroku autocomplete setup
+HEROKU_AC_ZSH_SETUP_PATH=/Users/mahendra/Library/Caches/heroku/autocomplete/zsh_setup && test -f $HEROKU_AC_ZSH_SETUP_PATH && source $HEROKU_AC_ZSH_SETUP_PATH;
+
+export GPG_TTY=$(tty)
+alias fix-gpg='pkill -9 gpg-agent && export GPG_TTY=$(tty)'
+
+#kube PS prompmt
+KUBE_PS1_SYMBOL_USE_IMG=true
+source "/usr/local/opt/kube-ps1/share/kube-ps1.sh"
+PS1='$(kube_ps1)'$PS1
+
+export PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
+
+export RUBY_CONFIGURE_OPTS="--with-openssl-dir=$(brew --prefix openssl@1.1)"
+eval "$(rbenv init -)"
+if [ -e /Users/mahendra/.nix-profile/etc/profile.d/nix.sh ]; then . /Users/mahendra/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer
+
+dnsreset () {
+  # sudo networksetup -setdnsservers "USB 10/100/1000 LAN" Empty
+  # sudo networksetup -setdnsservers "USB 10/100/1000 LAN" 1.1.1.1 1.0.0.1
+  sudo networksetup -setdnsservers "Wi-Fi" Empty
+  # sudo networksetup -setdnsservers "Wi-Fi" 8.8.8.8 8.8.4.4
+  sudo networksetup -setdnsservers "Wi-Fi" 1.1.1.1 1.0.0.1
+  # sudo networksetup -setdnsservers "Wi-Fi" 45.90.28.205 45.90.30.205
+  ping google.com
+}
+
+source $HOME/.cargo/env
+
+export PATH="/Users/mahendra/Library/Python/3.9/bin:$PATH"
+
+GET_ALLOW_COPY_JS_CODE() {
+    echo 'var allowPaste = function(e){
+  e.stopImmediatePropagation();
+  return true;
+};
+document.addEventListener("paste", allowPaste, true);'
+}
+
+function RENAME_FILES_RECURSIVELY() {
+
+  SEARCH_PATH="$1"
+  SEARCH="$2"
+  REPLACE="$3"
+
+  find ${SEARCH_PATH} -type f -name "*${SEARCH}*" | while read FILENAME ; do
+      NEW_FILENAME="$(echo ${FILENAME} | sed -e "s/${SEARCH}/${REPLACE}/g")";
+      mv "${FILENAME}" "${NEW_FILENAME}";
+  done
+}
+
+source /Users/mahendra/.config/broot/launcher/bash/br
+
+export PATH="${PATH}:/usr/local/Cellar/unbound/1.13.2_1/sbin"
+
+# Clean metadat from image
+# make sure imagemagick (brew install imagemagick) is installed
+#convert orig.jpg -strip result.jpg
+#or
+#mogrify -strip orig.jpg"
+alias clean_image_metadata='mogrify -strip '
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/Users/mahendra/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/mahendra/google-cloud-sdk/path.zsh.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/Users/mahendra/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/mahendra/google-cloud-sdk/completion.zsh.inc'; fi
+
+# bun completions
+[ -s "/Users/mahendra/.bun/_bun" ] && source "/Users/mahendra/.bun/_bun"
+
+# Bun
+export BUN_INSTALL="/Users/mahendra/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"

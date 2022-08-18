@@ -71,7 +71,7 @@ Plug 'vim-airline/vim-airline-themes'
 " Plug 'ludovicchabant/vim-gutentags'
 " Plug 'vim-scripts/a.vim'
 " Plug 'airblade/vim-gitgutter'
-Plug 'tpope/vim-fugitive'
+" Plug 'tpope/vim-fugitive'
 "Plug 'Raimondi/delimitMate'
 " Plug 'christoomey/vim-tmux-navigator'
 " Plug 'jez/vim-c0'
@@ -142,7 +142,7 @@ call plug#end()
 
 "-------------- PLUGINS END --------------------
 
-" let g:python3_host_prog = expand("$HOME/.virtualenvs/neovim_env/bin/python")
+let g:python3_host_prog = expand("$HOME/.pyenv/versions/neovim3/bin/python")
 " let g:loaded_python_provider = 0
 
 set lazyredraw
@@ -722,3 +722,7 @@ colorscheme gruvbox
 " Enable italics, Make sure this is immediately after colorscheme
 " https://stackoverflow.com/questions/3494435/vimrc-make-comments-italic
 highlight Comment cterm=italic gui=italic
+
+autocmd Filetype json
+  \ let g:indentLine_setConceal = 0 |
+  \ let g:vim_json_syntax_conceal = 0
