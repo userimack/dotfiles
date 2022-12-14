@@ -1,6 +1,6 @@
-# zmodload zsh/zprof
+            # zmodload zsh/zprof
 # To disable insecure directory error
-ZSH_DISABLE_COMPFIX=true
+#ZSH_DISABLE_COMPFIX=true
 
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
@@ -117,13 +117,17 @@ source $ZSH/oh-my-zsh.sh
 # set -o vi
 
 
-export PROTOC="${HOME}/.protoc"
-export PATH="$PATH:/usr/local/bin:${PROTOC}/bin"
+export PROTOC="$HOME/.protoc"
+export PATH="$PATH:/opt/homebrew/bin:${PROTOC}/bin"
 
-# pyenv setup
-eval "$(pyenv init -)"
-# To enable auto-activation add to your profile:
-if which pyenv-virtualenv-init > /dev/null; then eval "$(pyenv virtualenv-init -)"; fi
+# # pyenv setup
+# eval "$(pyenv init -)"
+# # To enable auto-activation add to your profile:
+# if which pyenv-virtualenv-init > /dev/null; then eval "$(pyenv virtualenv-init -)"; fi
+# export PYENV_VIRTUALENVWRAPPER_PREFER_PYVENV="true"
+# export WORKON_HOME=$HOME/.virtualenvs
+# pyenv virtualenvwrapper_lazy
+
 
 
 export LC_ALL=en_US.UTF-8
@@ -133,9 +137,6 @@ export LANG=en_US.UTF-8
 # zsh options
 #-------------------------------------------------------------
 
-# # syntax highlighting
-source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets pattern)
 
 # completions
 autoload -Uz compinit && compinit
@@ -162,20 +163,20 @@ HISTORY_IGNORE='([bf]g *|cd ..|l[alsh]#( *)#|less *|vim# *)'
 zstyle ':completion:*' menu select
 
 # Go development
-export GOPATH="${HOME}/go_projects"
-export GOBIN="${HOME}/go_projects/bin"
+export GOPATH="$HOME/go_projects"
+export GOBIN="$HOME/go_projects/bin"
 export GOROOT="$(brew --prefix golang)/libexec"
-export PATH="$PATH:${GOPATH}/bin:${GOROOT}/bin:$HOME/bin"
+export PATH="$PATH:$GOPATH/bin:$GOROOT/bin:$HOME/bin"
 
 # iterm 2 shell integration config
 # test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 
-export PATH="/usr/local/opt/openssl/bin:$PATH"
-export PATH="/usr/local/opt/icu4c/bin:$PATH"
-export PATH="/usr/local/opt/icu4c/sbin:$PATH"
+# export PATH="/usr/local/opt/openssl/bin:$PATH"
+# export PATH="/usr/local/opt/icu4c/bin:$PATH"
+# export PATH="/usr/local/opt/icu4c/sbin:$PATH"
 
 
-export PATH="/usr/local/opt/gettext/bin:$PATH"
+export PATH="$(brew --prefix gettext)/bin:$PATH"
 
 # fzf settings https://github.com/junegunn/fzf
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
@@ -237,11 +238,12 @@ DISABLE_UNTRACKED_FILES_DIRTY="true"
 eval "$(direnv hook zsh)"
 
 export HISTTIMEFORMAT="%d/%m/%y %T "
-export PATH="/usr/local/opt/openjdk/bin:$PATH"
+export PATH="$(brew --prefix openjdk)/bin:$PATH"
 
 
 # #sandboxd
-source "$HOME/.config/sandboxd/sandboxd"
+# source "$HOME/.config/sandboxd/sandboxd"
+
 #
 # ############################################## ALIAS #######################################
 # source "$HOME/dotfiles/.zshrc.alias"
@@ -329,7 +331,7 @@ function dutwo()
 alias tmux='tmux -u'
 
 # # autojump configuration
-[ -f /usr/local/etc/profile.d/autojump.sh ] && . /usr/local/etc/profile.d/autojump.sh
+[ -f /opt/homebrew/etc/profile.d/autojump.sh ] && . /opt/homebrew/etc/profile.d/autojump.sh
 alias j='z'
 
 alias pmr='python manage.py runserver'
@@ -509,7 +511,12 @@ function CLEANUP_DOCKER() {
 
 
 # Mac clean cache
-function CLEAN_MAC() { sudo /bin/rm -rf /Users/mahendra/Library/Caches 2>/dev/null; echo "Done"; }
+function CLEAN_MAC() {
+    sudo /bin/rm -rf /Users/mahendra/Library/Caches 2>/dev/null;
+    # sudo /bin/rm -rf /Library/Caches 2>/dev/null;
+    # sudo /bin/rm -rf "~/Library/Saved Application State/" 2>/dev/null;
+    echo "Done";
+}
 
 
 function MOST_USED_COMMANDS {
@@ -521,20 +528,17 @@ function MOST_USED_COMMANDS {
 # for timing
 # zprof
 
-autoload -U +X bashcompinit && bashcompinit
-complete -o nospace -C /usr/local/bin/terraform terraform
-export PATH="$HOME/.jenv/bin:$PATH"
-eval "$(jenv init -)"
+# autoload -U +X bashcompinit && bashcompinit
+# complete -o nospace -C /usr/local/bin/terraform terraform
+# export PATH="$HOME/.jenv/bin:$PATH"
+# eval "$(jenv init -)"
 export TALISMAN_INTERACTIVE=true
 
-export PYENV_VIRTUALENVWRAPPER_PREFER_PYVENV="true"
-export WORKON_HOME=$HOME/.virtualenvs
-pyenv virtualenvwrapper_lazy
 
-complete -o nospace -C /usr/local/bin/vault vault
+# complete -o nospace -C /usr/local/bin/vault vault
 
-export PATH="/usr/local/opt/gnu-tar/libexec/gnubin:/usr/local/opt/grep/libexec/gnubin:/usr/local/opt/gnu-sed/libexec/gnubin:/usr/local/opt/gnu-indent/libexec/gnubin:/usr/local/opt/findutils/libexec/gnubin:/usr/local/opt/gnu-tar/libexec/gnubin:$PATH"
-export PATH="/usr/local/opt/ruby/bin:$PATH"
+export PATH="/opt/homebrew/opt/gnu-tar/libexec/gnubin:/opt/homebrew/opt/grep/libexec/gnubin:/opt/homebrew/opt/gnu-sed/libexec/gnubin:/opt/homebrew/opt/gnu-indent/libexec/gnubin:/opt/homebrew/opt/findutils/libexec/gnubin:/opt/homebrew/opt/gnu-tar/libexec/gnubin:$PATH"
+export PATH="/opt/homebrew/opt/ruby/bin:$PATH"
 
 # # >>> conda initialize >>>
 # # !! Contents within this block are managed by 'conda init' !!
@@ -552,8 +556,8 @@ export PATH="/usr/local/opt/ruby/bin:$PATH"
 # # <<< conda initialize <<<
 
 
-export NVM_DIR="$HOME/.nvm"
-[ -s "/usr/local/opt/nvm/nvm.sh" ] && . "/usr/local/opt/nvm/nvm.sh"  # This loads nvm
+# export NVM_DIR="$HOME/.nvm"
+# [ -s "/usr/local/opt/nvm/nvm.sh" ] && . "/usr/local/opt/nvm/nvm.sh"  # This loads nvm
 # [ -s "/usr/local/opt/nvm/etc/bash_completion.d/nvm" ] && . "/usr/local/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
 #
 function path(){
@@ -568,41 +572,33 @@ export MLFLOW_TRACKING_URI=http://localhost:5000
 # source ~/miniconda/bin/activate
 # source ~/.profile
 
-source ~/.oh-my-zsh/custom/completion.k3d.config
-export BYOBU_PREFIX=/usr/local
-
-# heroku autocomplete setup
-HEROKU_AC_ZSH_SETUP_PATH=/Users/mahendra/Library/Caches/heroku/autocomplete/zsh_setup && test -f $HEROKU_AC_ZSH_SETUP_PATH && source $HEROKU_AC_ZSH_SETUP_PATH;
-# heroku autocomplete setup
-HEROKU_AC_ZSH_SETUP_PATH=/Users/mahendra/Library/Caches/heroku/autocomplete/zsh_setup && test -f $HEROKU_AC_ZSH_SETUP_PATH && source $HEROKU_AC_ZSH_SETUP_PATH;
+source ~/.oh-my-zsh/custom/plugins/k3d/_k3d
+export BYOBU_PREFIX=/opt/homebrew/
 
 export GPG_TTY=$(tty)
 alias fix-gpg='pkill -9 gpg-agent && export GPG_TTY=$(tty)'
 
 #kube PS prompmt
 KUBE_PS1_SYMBOL_USE_IMG=true
-source "/usr/local/opt/kube-ps1/share/kube-ps1.sh"
+source "/opt/homebrew/opt/kube-ps1/share/kube-ps1.sh"
 PS1='$(kube_ps1)'$PS1
 
-export PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
 
-export RUBY_CONFIGURE_OPTS="--with-openssl-dir=$(brew --prefix openssl@1.1)"
-eval "$(rbenv init -)"
-if [ -e /Users/mahendra/.nix-profile/etc/profile.d/nix.sh ]; then . /Users/mahendra/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer
 
 dnsreset () {
   # sudo networksetup -setdnsservers "USB 10/100/1000 LAN" Empty
   # sudo networksetup -setdnsservers "USB 10/100/1000 LAN" 1.1.1.1 1.0.0.1
   sudo networksetup -setdnsservers "Wi-Fi" Empty
-  # sudo networksetup -setdnsservers "Wi-Fi" 8.8.8.8 8.8.4.4
-  sudo networksetup -setdnsservers "Wi-Fi" 1.1.1.1 1.0.0.1
+  sudo networksetup -setdnsservers "Wi-Fi" 8.8.8.8 8.8.4.4
+  # sudo networksetup -setdnsservers "Wi-Fi" 1.1.1.1 1.0.0.1
   # sudo networksetup -setdnsservers "Wi-Fi" 45.90.28.205 45.90.30.205
   ping google.com
 }
 
-source $HOME/.cargo/env
+# TODO: remove it after installation of rust
+# source $HOME/.cargo/env
 
-export PATH="/Users/mahendra/Library/Python/3.9/bin:$PATH"
+
 
 GET_ALLOW_COPY_JS_CODE() {
     echo 'var allowPaste = function(e){
@@ -624,9 +620,11 @@ function RENAME_FILES_RECURSIVELY() {
   done
 }
 
+
+export PATH="$(brew --prefix coreutils)/libexec/gnubin:$PATH"
 source /Users/mahendra/.config/broot/launcher/bash/br
 
-export PATH="${PATH}:/usr/local/Cellar/unbound/1.13.2_1/sbin"
+export PATH="${PATH}:$(brew --prefix unbound)/sbin"
 
 # Clean metadat from image
 # make sure imagemagick (brew install imagemagick) is installed
@@ -644,6 +642,48 @@ if [ -f '/Users/mahendra/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/
 # bun completions
 [ -s "/Users/mahendra/.bun/_bun" ] && source "/Users/mahendra/.bun/_bun"
 
-# Bun
-export BUN_INSTALL="/Users/mahendra/.bun"
-export PATH="$BUN_INSTALL/bin:$PATH"
+
+# # syntax highlighting
+source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets pattern)
+
+# export ZPLUG_HOME=/opt/homebrew/opt/zplug
+# source $ZPLUG_HOME/init.zsh
+#
+# . ~/.asdf/plugins/java/set-java-home.zsh
+export JAVA_HOME='/Library/Java/JavaVirtualMachines/temurin-8.jdk/Contents/Home'
+#export PATH='${PATH}:/Library/Java/JavaVirtualMachines/temurin-8.jdk/Contents/Home'
+
+autoload -U +X bashcompinit && bashcompinit
+source /opt/homebrew/etc/bash_completion.d/az
+
+# resolve librdkafka missing issue
+export C_INCLUDE_PATH=$(brew --prefix)/include
+export LIBRARY_PATH=$(brew --prefix)/lib
+
+# Activate asdf
+. $HOME/.asdf/asdf.sh
+
+# append completions to fpath
+fpath=(${ASDF_DIR}/completions $fpath)
+# initialise completions with ZSH's compinit
+autoload -Uz compinit && compinit
+
+# openssl path setup
+# export LDFLAGS="-L/opt/homebrew/opt/openssl@3/lib"
+# export CPPFLAGS="-I/opt/homebrew/opt/openssl@3/include"
+# export PATH="/opt/homebrew/opt/openssl@3/bin:$PATH"
+
+# useful only for Mac OS Silicon M1,
+# still working but useless for the other platforms
+docker() {
+ if [[ `uname -m` == "arm64" ]] && [[ "$1" == "run" || "$1" == "build" ]]; then
+    /opt/homebrew/bin/docker "$1" --platform linux/amd64 "${@:2}"
+  else
+     /opt/homebrew/bin/docker "$@"
+  fi
+}
+
+export CPPFLAGS="-I/opt/homebrew/include -L/opt/homebrew/lib"
+export LDFLAGS="-L/opt/homebrew/opt/libffi/lib"
+export CPPFLAGS="-I/opt/homebrew/opt/libffi/include"

@@ -43,7 +43,7 @@ Plug 'hashivim/vim-terraform'
 
 
 " ------Theme------
-Plug 'tomasr/molokai'
+" Plug 'tomasr/molokai'
 " Plug 'morhetz/gruvbox'
 " Plug 'altercation/vim-colors-solarized'
 " -----------------
@@ -63,7 +63,7 @@ Plug 'scrooloose/nerdcommenter'
 
 " status line
 Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
+" Plug 'vim-airline/vim-airline-themes'
 " Plug 'xolox/vim-misc'
 " Plug 'xolox/vim-easytags'
 " Plug 'majutsushi/tagbar'
@@ -142,7 +142,7 @@ call plug#end()
 
 "-------------- PLUGINS END --------------------
 
-let g:python3_host_prog = expand("$HOME/.pyenv/versions/neovim3/bin/python")
+let g:python3_host_prog = expand("$HOME/.virtualenvs/neovim3/bin/python")
 " let g:loaded_python_provider = 0
 
 set lazyredraw
@@ -256,7 +256,7 @@ let g:airline_powerline_fonts = 1
 let g:airline_section=''
 let g:airline_detect_paste=1  " Show PASTE if in paste mode
 let g:airline#extensions#tabline#enabled = 1
-let g:airline_theme='solarized'
+" let g:airline_theme='solarized'
 if !exists('g:airline_symbols')
     let g:airline_symbols = {}
 endif
@@ -271,9 +271,9 @@ set background=dark
 set termguicolors
 " If italics is disabled in gruvbox then use below linethen use below line
 let g:gruvbox_italic=1
-" colorscheme gruvbox
+colorscheme gruvbox
 " colorscheme solarized
-colorscheme molokai
+" colorscheme molokai
 "
 " let g:airline_theme='badwolf'
 " let g:airline#extensions#tabline#formatter = 'unique_tail'
@@ -718,7 +718,7 @@ autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab indentkeys-=<:>
 
 " Enable true colors if available
 set termguicolors
-colorscheme gruvbox
+" colorscheme gruvbox
 " Enable italics, Make sure this is immediately after colorscheme
 " https://stackoverflow.com/questions/3494435/vimrc-make-comments-italic
 highlight Comment cterm=italic gui=italic
