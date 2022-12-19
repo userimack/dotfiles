@@ -1,20 +1,31 @@
 echo "blueutil: to control bluetooth"
 
-brew install coreutils gcc jenv jenv mysql neovim pass postgresql rsync trash autojump k3d colima diff-so-fancy asdf \
-            hashicorp/tap/terraform-ls node speedtest-cli neovim unbound ldns vim ipcalc  gpg gpg2 pinentry-mac moreutils go redis  \
-          pre-commit kube-ps1 kubectx  lsd mplayer trash fd topgrade tmux  aquasecurity/trivy/trivy graphviz cloud-nuke imagemagick \
-          vagrant direnv zsh-syntax-highlighting fzf pgcli helm wget httpie gnu-typist ffmpeg  ripgrep aria2 istioctl \
-          ansible kubectl bat exa p7zip azure-cli tealdeer \
-         findutils gnu-indent gnu-sed gnutls grep gnu-tar gawk shellcheck blueutil openssl jq tig ncdu
+brew install coreutils gcc jenv mysql \
+neovim pass postgresql rsync \
+trash autojump k3d diff-so-fancy asdf \
+hashicorp/tap/terraform-ls neovim vim ipcalc gpg gpg2 \
+pinentry-mac moreutils pre-commit kube-ps1 kubectx lsd \
+trash fd topgrade tmux direnv zsh-syntax-highlighting \
+fzf wget httpie ripgrep kubectl bat exa p7zip azure-cli tealdeer \
+findutils gnu-indent gnu-sed gnutls grep gnu-tar gawk \
+shellcheck blueutil openssl jq tig ncdu curl
 
+# setup colima
+brew install docker docker-compose colima
+
+# brew install node speedtest-cli unbound ldns go redis mplayer \
+#aquasecurity/trivy/trivy graphviz\
+#cloud-nuke imagemagick vagrant \
+#pgcli gnu-typist ffmpeg aria2 istioctl ansible
 
 #brew install zplug # plugin manager for zsh
-# docker docker-compose  mongodb-community unrar
+#   mongodb-community unrar
 # starship fish nmap opa bmon apache-spark nim xmlstarlet podman git-delta grex bandwhich tealdeer hyperfine k9s exiftool xboard ifstat luajit python3-newt fontforge hadoop osxfuse
 # realpath
-brew install delta dog curlie procs gping hyperfine glances sd fd broot duf dust bottom ; npm install gtop -g
+#brew install delta dog curlie procs gping hyperfine glances sd fd broot duf dust bottom ; npm install gtop -g
 # install asdf and then using it install terraform, tfsec, python
 # install azure-cli
 
-    brew install --cask koodo-reader vscodium keepassxc keepingyouawake sloth hiddenbar wireshark postman android-platform-tools iina dbeaver-community  meld osquery hammerspoon obsidian drawio omnidisksweeper rectangle the-unarchiver thorium fbreader fluent-reader hiddenbar kindle evernote brave-browser firefox keybase xbar karabiner-elements
+brew install --cask vscodium keepassxc postman dbeaver-community meld obsidian drawio the-unarchiver xbar
+#brew install --cask koodo-reader keepingyouawake sloth hiddenbar wireshark android-platform-tools iina osquery hammerspoon omnidisksweeper rectangle thorium fbreader fluent-reader hiddenbar kindle evernote brave-browser firefox keybase karabiner-elements #personal
 #metasploit lulu librdkafka

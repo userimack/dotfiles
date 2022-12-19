@@ -26,3 +26,4 @@ docker() {
      /usr/local/bin/docker "$@"
   fi
 }
+export PATH=${PATH}:${HOME}/.mitmproxy/bin

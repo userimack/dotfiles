@@ -1,9 +1,10 @@
-            # zmodload zsh/zprof
+# zmodload zsh/zprof
 # To disable insecure directory error
 #ZSH_DISABLE_COMPFIX=true
 
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
+fpath+=${ZSH_CUSTOM:-${ZSH:-~/.oh-my-zsh}/custom}/plugins/zsh-completions/src
 
 # Path to your oh-my-zsh installation.
 export ZSH=$HOME/.oh-my-zsh
@@ -66,7 +67,6 @@ ZSH_THEME="robbyrussell"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
-  zsh-completions
   z
   git
   kubectl
@@ -118,7 +118,7 @@ source $ZSH/oh-my-zsh.sh
 
 
 export PROTOC="$HOME/.protoc"
-export PATH="$PATH:/opt/homebrew/bin:${PROTOC}/bin"
+export PATH="$PATH:/usr/local/bin:${PROTOC}/bin"
 
 # # pyenv setup
 # eval "$(pyenv init -)"
@@ -331,7 +331,7 @@ function dutwo()
 alias tmux='tmux -u'
 
 # # autojump configuration
-[ -f /opt/homebrew/etc/profile.d/autojump.sh ] && . /opt/homebrew/etc/profile.d/autojump.sh
+[ -f /usr/local/etc/profile.d/autojump.sh ] && . /usr/local/etc/profile.d/autojump.sh
 alias j='z'
 
 alias pmr='python manage.py runserver'
@@ -537,8 +537,8 @@ export TALISMAN_INTERACTIVE=true
 
 # complete -o nospace -C /usr/local/bin/vault vault
 
-export PATH="/opt/homebrew/opt/gnu-tar/libexec/gnubin:/opt/homebrew/opt/grep/libexec/gnubin:/opt/homebrew/opt/gnu-sed/libexec/gnubin:/opt/homebrew/opt/gnu-indent/libexec/gnubin:/opt/homebrew/opt/findutils/libexec/gnubin:/opt/homebrew/opt/gnu-tar/libexec/gnubin:$PATH"
-export PATH="/opt/homebrew/opt/ruby/bin:$PATH"
+export PATH="$(brew --prefix gnu-tar)/libexec/gnubin:$(brew --prefix grep)/libexec/gnubin:$(brew --prefix gnu-sed)/libexec/gnubin:$(brew --prefix gnu-indent)/libexec/gnubin:$(brew --prefix findutils)/libexec/gnubin:$(brew --prefix gnu-tar)/libexec/gnubin:$PATH"
+export PATH="$(brew --prefix ruby)/bin:$PATH"
 
 # # >>> conda initialize >>>
 # # !! Contents within this block are managed by 'conda init' !!
@@ -572,15 +572,15 @@ export MLFLOW_TRACKING_URI=http://localhost:5000
 # source ~/miniconda/bin/activate
 # source ~/.profile
 
-source ~/.oh-my-zsh/custom/plugins/k3d/_k3d
-export BYOBU_PREFIX=/opt/homebrew/
+#source ~/.oh-my-zsh/custom/plugins/k3d/_k3d
+#export BYOBU_PREFIX=/usr/local
 
 export GPG_TTY=$(tty)
 alias fix-gpg='pkill -9 gpg-agent && export GPG_TTY=$(tty)'
 
 #kube PS prompmt
 KUBE_PS1_SYMBOL_USE_IMG=true
-source "/opt/homebrew/opt/kube-ps1/share/kube-ps1.sh"
+source "$(brew --prefix kube-ps1)/share/kube-ps1.sh"
 PS1='$(kube_ps1)'$PS1
 
 
@@ -622,7 +622,7 @@ function RENAME_FILES_RECURSIVELY() {
 
 
 export PATH="$(brew --prefix coreutils)/libexec/gnubin:$PATH"
-source /Users/mahendra/.config/broot/launcher/bash/br
+#source /Users/mahendra/.config/broot/launcher/bash/br
 
 export PATH="${PATH}:$(brew --prefix unbound)/sbin"
 
@@ -644,25 +644,26 @@ if [ -f '/Users/mahendra/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/
 
 
 # # syntax highlighting
-source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets pattern)
 
-# export ZPLUG_HOME=/opt/homebrew/opt/zplug
+# export ZPLUG_HOME=$(brew --prefix zplug)
 # source $ZPLUG_HOME/init.zsh
 #
 # . ~/.asdf/plugins/java/set-java-home.zsh
 export JAVA_HOME='/Library/Java/JavaVirtualMachines/temurin-8.jdk/Contents/Home'
 #export PATH='${PATH}:/Library/Java/JavaVirtualMachines/temurin-8.jdk/Contents/Home'
 
-autoload -U +X bashcompinit && bashcompinit
-source /opt/homebrew/etc/bash_completion.d/az
+#autoload -U +X bashcompinit && bashcompinit
+#source /usr/local/etc/bash_completion.d/az
 
 # resolve librdkafka missing issue
 export C_INCLUDE_PATH=$(brew --prefix)/include
 export LIBRARY_PATH=$(brew --prefix)/lib
 
 # Activate asdf
-. $HOME/.asdf/asdf.sh
+#. $HOME/.asdf/asdf.sh # m1
+. /usr/local/opt/asdf/libexec/asdf.sh #intel
 
 # append completions to fpath
 fpath=(${ASDF_DIR}/completions $fpath)
@@ -670,20 +671,23 @@ fpath=(${ASDF_DIR}/completions $fpath)
 autoload -Uz compinit && compinit
 
 # openssl path setup
-# export LDFLAGS="-L/opt/homebrew/opt/openssl@3/lib"
-# export CPPFLAGS="-I/opt/homebrew/opt/openssl@3/include"
-# export PATH="/opt/homebrew/opt/openssl@3/bin:$PATH"
+# export LDFLAGS="-L$(brew --prefix openssl@3)/lib"
+# export CPPFLAGS="-I$(brew --prefix openssl@3)/include"
+# export PATH="$(brew --prefix openssl@3)/bin:$PATH"
 
 # useful only for Mac OS Silicon M1,
 # still working but useless for the other platforms
-docker() {
- if [[ `uname -m` == "arm64" ]] && [[ "$1" == "run" || "$1" == "build" ]]; then
-    /opt/homebrew/bin/docker "$1" --platform linux/amd64 "${@:2}"
-  else
-     /opt/homebrew/bin/docker "$@"
-  fi
-}
+# docker {
+#  if [[ `uname -m` == "arm64" ]] && [[ "$1" == "run" || "$1" == "build" ]]; then
+#     `which docker` "$1" --platform linux/amd64 "${@:2}"
+#   else
+#       `which docker` "$@"
+#   fi
+# }
 
-export CPPFLAGS="-I/opt/homebrew/include -L/opt/homebrew/lib"
-export LDFLAGS="-L/opt/homebrew/opt/libffi/lib"
-export CPPFLAGS="-I/opt/homebrew/opt/libffi/include"
+export CPPFLAGS="-I/usr/local/include -L/usr/local/lib"
+export LDFLAGS="-L$(brew --prefix libffi)/lib"
+export CPPFLAGS="-I$(brew --prefix libffi)/include"
+
+alias colima_start='colima start --cpu 4 --memory 8 --disk 20'
+export PATH=${PATH}:${HOME}/.mitmproxy/bin

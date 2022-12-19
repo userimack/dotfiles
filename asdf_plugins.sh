@@ -12,5 +12,12 @@ asdf install python 3.8.12
 asdf install python latest
 asdf install terraform 0.13.6
 asdf install tfsec latest
-asdf install ruby 2.6.5
-asdf install go 1.17.6
+# asdf install ruby 2.6.5
+# asdf install go latest
+
+
+cat <<EOF >> ~/.tools-versions
+python 3.8.12
+terraform 0.13.6
+tfsec 1.4.2
+EOF
