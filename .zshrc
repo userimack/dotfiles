@@ -1,4 +1,4 @@
-# zmodload zsh/zprof
+ zmodload zsh/zprof
 # To disable insecure directory error
 #ZSH_DISABLE_COMPFIX=true
 
@@ -179,7 +179,8 @@ export PATH="$PATH:$GOPATH/bin:$GOROOT/bin:$HOME/bin"
 export PATH="$(brew --prefix gettext)/bin:$PATH"
 
 # fzf settings https://github.com/junegunn/fzf
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+ [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
 export FZF_DEFAULT_COMMAND="fd --type file --color=always"
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export FZF_DEFAULT_OPTS='--height 40% --reverse --border --ansi'
@@ -589,9 +590,8 @@ dnsreset () {
   # sudo networksetup -setdnsservers "USB 10/100/1000 LAN" Empty
   # sudo networksetup -setdnsservers "USB 10/100/1000 LAN" 1.1.1.1 1.0.0.1
   sudo networksetup -setdnsservers "Wi-Fi" Empty
-  sudo networksetup -setdnsservers "Wi-Fi" 8.8.8.8 8.8.4.4
-  # sudo networksetup -setdnsservers "Wi-Fi" 1.1.1.1 1.0.0.1
-  # sudo networksetup -setdnsservers "Wi-Fi" 45.90.28.205 45.90.30.205
+  # sudo networksetup -setdnsservers "Wi-Fi" 8.8.8.8 8.8.4.4
+  sudo networksetup -setdnsservers "Wi-Fi" 1.1.1.1 1.0.0.1
   ping google.com
 }
 
@@ -650,8 +650,8 @@ ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets pattern)
 # export ZPLUG_HOME=$(brew --prefix zplug)
 # source $ZPLUG_HOME/init.zsh
 #
-# . ~/.asdf/plugins/java/set-java-home.zsh
-export JAVA_HOME='/Library/Java/JavaVirtualMachines/temurin-8.jdk/Contents/Home'
+#. ~/.asdf/plugins/java/set-java-home.zsh
+#export JAVA_HOME='/Library/Java/JavaVirtualMachines/temurin-8.jdk/Contents/Home'
 #export PATH='${PATH}:/Library/Java/JavaVirtualMachines/temurin-8.jdk/Contents/Home'
 
 #autoload -U +X bashcompinit && bashcompinit
@@ -691,3 +691,44 @@ export CPPFLAGS="-I$(brew --prefix libffi)/include"
 
 alias colima_start='colima start --cpu 4 --memory 8 --disk 20'
 export PATH=${PATH}:${HOME}/.mitmproxy/bin
+
+
+start_colima() {
+  local CERTS="${HOME}/.ca-certificates"
+  mkdir -p ${CERTS}
+  openssl s_client -showcerts -connect ${URL} </dev/null 2>/dev/null|openssl x509 -outform PEM >${CERTS}/docker-com.pem
+  openssl s_client -showcerts -verify 5 -connect ${URL} </dev/null 2>/dev/null | sed -ne '/-BEGIN/,/-END/p' >${CERTS}/docker-com-chain.pem
+  colima start
+
+  colima ssh -- sudo cp ${CERTS}/* /usr/local/share/ca-certificates/
+  colima ssh -- sudo update-ca-certificates
+  colima ssh -- sudo service docker restart
+}
+
+export M2_HOME="/Users/mahendra/apache-maven-3.8.7"
+PATH="${M2_HOME}/bin:${PATH}"
+export PATH
+alias icloud='cd "/Users/mahendra/Library/Mobile Documents/com~apple~CloudDocs/"'
+export PATH=${PATH}:${HOME}/.mitmproxy/bin
+export PATH=${PATH}:${HOME}/.mitmproxy/bin
+
+
+# Enable touch id for sudo
+# Start
+if grep -q 'auth sufficient pam_tid.so' /etc/pam.d/sudo; then
+  echo "Touch ID is enabled for sudo"
+else
+  read "response?Touch ID is not enabled for sudo. Would you like to enable it now? [y/n]: "
+  if [[ "$response" == [yY] ]]; then
+    sudo grep -q -F 'auth sufficient pam_tid.so' /etc/pam.d/sudo || sudo sed -i '' '2i\
+auth sufficient pam_tid.so
+    ' /etc/pam.d/sudo
+    if grep -q 'auth sufficient pam_tid.so' /etc/pam.d/sudo; then
+      echo "'auth sufficient pam_tid.so' added to /etc/pam.d/sudo"
+    fi
+  else
+    echo "No modifications were made to /etc/pam.d/sudo"
+  fi
+fi
+# End
+

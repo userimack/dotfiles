@@ -8,7 +8,7 @@ pinentry-mac moreutils pre-commit kube-ps1 kubectx lsd \
 trash fd topgrade tmux direnv zsh-syntax-highlighting \
 fzf wget httpie ripgrep kubectl bat exa p7zip azure-cli tealdeer \
 findutils gnu-indent gnu-sed gnutls grep gnu-tar gawk \
-shellcheck blueutil openssl jq tig ncdu curl
+shellcheck blueutil openssl jq tig ncdu curl vagrant
 
 # setup colima
 brew install docker docker-compose colima
@@ -22,10 +22,11 @@ brew install docker docker-compose colima
 #   mongodb-community unrar
 # starship fish nmap opa bmon apache-spark nim xmlstarlet podman git-delta grex bandwhich tealdeer hyperfine k9s exiftool xboard ifstat luajit python3-newt fontforge hadoop osxfuse
 # realpath
-#brew install delta dog curlie procs gping hyperfine glances sd fd broot duf dust bottom ; npm install gtop -g
+brew install delta dog curlie procs gping hyperfine glances sd fd broot duf dust bottom ; npm install gtop -g
 # install asdf and then using it install terraform, tfsec, python
 # install azure-cli
 
-brew install --cask vscodium keepassxc postman dbeaver-community meld obsidian drawio the-unarchiver xbar
+brew install --cask vscodium keepassxc postman dbeaver-community meld obsidian drawio the-unarchiver xbar virtualbox
+brew install --cask keepingyouawake sloth wireshark android-platform-tools omnidisksweeper rectangle
 #brew install --cask koodo-reader keepingyouawake sloth hiddenbar wireshark android-platform-tools iina osquery hammerspoon omnidisksweeper rectangle thorium fbreader fluent-reader hiddenbar kindle evernote brave-browser firefox keybase karabiner-elements #personal
 #metasploit lulu librdkafka

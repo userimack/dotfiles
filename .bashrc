@@ -27,3 +27,5 @@ docker() {
   fi
 }
 export PATH=${PATH}:${HOME}/.mitmproxy/bin
+export PATH=${PATH}:${HOME}/.mitmproxy/bin
+export PATH=${PATH}:${HOME}/.mitmproxy/bin
